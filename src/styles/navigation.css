@@ -1,0 +1,24 @@
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #1a1a1a;
+  padding: 0 24px;
+}
+
+.navigation__menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  column-gap: 12px;
+}
+.navigation__menu a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navigation__menu a.active {
+  text-decoration: underline;
+}

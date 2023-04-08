@@ -1,0 +1,32 @@
+---
+import "../styles/navigation.css";
+
+const menus = [
+  {
+    name: "Home",
+    link: "/",
+  },
+  {
+    name: "About",
+    link: "/about",
+  },
+  {
+    name: "Blog",
+    link: "/blog",
+  },
+];
+---
+
+<nav class="navigation">
+  <div class="navigation__brand">Rizki Fitra Rahman</div>
+  <div class="navigation__menu">
+    {
+      menus.map((menu, index) => {
+        return <a href={menu.link}>{menu.name}</a>;
+      })
+    }
+  </div>
+</nav>
+<script>
+  import "../scripts/menu.js";
+</script>
