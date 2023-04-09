@@ -1,4 +1,5 @@
 ---
+import logo from "../images/logo.svg";
 import "../styles/navigation.css";
 
 const menus = [
@@ -18,7 +19,10 @@ const menus = [
 ---
 
 <nav class="navigation">
-  <div class="navigation__brand">Rizki Fitra Rahman</div>
+  <div class="navigation__brand">
+    <img class="navigation__brand_logo" src={logo} alt="Logo" />
+    DevFitra
+  </div>
   <div class="navigation__menu">
     {
       menus.map((menu, index) => {

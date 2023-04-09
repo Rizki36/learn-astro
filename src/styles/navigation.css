@@ -2,8 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #1a1a1a;
+  border-bottom: 2px solid #1a1a1a;
   padding: 0 24px;
+  max-width: 1536px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .navigation__menu {
@@ -21,4 +24,16 @@
 
 .navigation__menu a.active {
   text-decoration: underline;
+}
+
+.navigation__brand {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.navigation__brand_logo {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
 }
