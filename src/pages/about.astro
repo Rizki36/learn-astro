@@ -79,28 +79,52 @@ const links = [
     padding: 12px 24px;
   }
 
+  .about__image_wrapper img {
+    height: auto;
+    width: 100%;
+  }
+
   .about__description {
     text-align: center;
-    margin: 100px 0;
+    margin: 160px 0;
     max-width: 500px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.5em;
   }
 
-  .about__skills {
-    width: 100%;
-    height: 100px;
-    position: relative;
-    background-color: #1a1a1a;
+  @media screen and (max-width: 768px) {
+    .about__description {
+      margin: 32px 24px 60px;
+    }
   }
+
   .about__skills {
     display: flex;
     align-items: center;
     justify-content: center;
     column-gap: 50px;
     margin-bottom: 24px;
+    width: 100%;
+    height: 100px;
+    position: relative;
+    background-color: #1a1a1a;
   }
+
+  @media screen and (max-width: 768px) {
+    .about__skills {
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      flex-direction: column;
+      text-align: center;
+      row-gap: 50px;
+      height: unset;
+      background-color: unset;
+      padding: 0 24px;
+    }
+  }
+
   .about__skills_item img {
     height: 60px;
     width: 60px;
@@ -113,6 +137,14 @@ const links = [
     justify-content: center;
     margin-bottom: 24px;
     height: 500px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .about__tagline {
+      height: 300px;
+      text-align: center;
+      padding: 0 12px;
+    }
   }
 
   .about__links {
@@ -142,14 +174,19 @@ const links = [
       fairly extensive experience in application development.
     </p>
 
-    <div class="about__skills">
-      {
-        skills.map((skill) => (
-          <div class="about__skills_item">
-            <img src={skill.logo} alt={skill.label} title={skill.label} />
-          </div>
-        ))
-      }
+    <div>
+      <h1 class="text-gradient text-center" style="margin-bottom: 24px;">
+        Skills
+      </h1>
+      <div class="about__skills">
+        {
+          skills.map((skill) => (
+            <div class="about__skills_item">
+              <img src={skill.logo} alt={skill.label} title={skill.label} />
+            </div>
+          ))
+        }
+      </div>
     </div>
 
     <div class="about__tagline">
