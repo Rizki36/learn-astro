@@ -1,7 +1,174 @@
 ---
+import me from "../images/me.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+// Skills
+import javascript from "../images/skills/javascript.svg";
+import typescript from "../images/skills/typescript.svg";
+import laravel from "../images/skills/laravel.svg";
+import nextJs from "../images/skills/nextjs.svg";
+import prisma from "../images/skills/prisma.svg";
+import react from "../images/skills/react.svg";
+import mysql from "../images/skills/mysql.svg";
+import postgreeSql from "../images/skills/postgreesql.svg";
+
+// Links
+import github from "../images/github.svg";
+import linkedin from "../images/linkedin.svg";
+import instgram from "../images/instagram.svg";
+
+const skills = [
+  {
+    label: "React",
+    logo: react,
+  },
+  {
+    label: "Prisma",
+    logo: prisma,
+  },
+  {
+    label: "NextJs",
+    logo: nextJs,
+  },
+  {
+    label: "JavaScript",
+    logo: javascript,
+  },
+  {
+    label: "TypeScript",
+    logo: typescript,
+  },
+  {
+    label: "Laravel",
+    logo: laravel,
+  },
+  {
+    label: "PostgreeSql",
+    logo: postgreeSql,
+  },
+  {
+    label: "Mysql",
+    logo: mysql,
+  },
+];
+
+const links = [
+  {
+    label: "Github",
+    url: "https://github.com/Rizki36",
+    logo: github,
+  },
+  {
+    label: "Linkedin",
+    url: "https://www.linkedin.com/in/rizki36/",
+    logo: linkedin,
+  },
+  {
+    label: "Instagram",
+    url: "https://www.instagram.com/fitra36_",
+    logo: instgram,
+  },
+];
 ---
 
-<BaseLayout>
-  <h1>About</h1>
+<style>
+  .about__image_wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 24px;
+  }
+
+  .about__description {
+    text-align: center;
+    margin: 100px 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5em;
+  }
+
+  .about__skills {
+    width: 100%;
+    height: 100px;
+    position: relative;
+    background-color: #1a1a1a;
+  }
+  .about__skills {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
+    margin-bottom: 24px;
+  }
+  .about__skills_item img {
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+  }
+
+  .about__tagline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    height: 500px;
+  }
+
+  .about__links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 50px;
+    margin: 24px;
+  }
+
+  .about__links__item img {
+    height: 30px;
+    width: 30px;
+    object-fit: contain;
+    color: #fff;
+  }
+</style>
+
+<BaseLayout withPadding={false} withMaxWidth={false}>
+  <div class="about">
+    <div class="about__image_wrapper">
+      <img src={me} alt="Me" />
+    </div>
+
+    <p class="about__description">
+      I am a coder, passionate about technology and app development. I have a
+      fairly extensive experience in application development.
+    </p>
+
+    <div class="about__skills">
+      {
+        skills.map((skill) => (
+          <div class="about__skills_item">
+            <img src={skill.logo} alt={skill.label} title={skill.label} />
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="about__tagline">
+      <h1 class="text-gradient">Let's solve the problem together</h1>
+    </div>
+
+    <div class="about__links">
+      {
+        links.map((link) => (
+          <a
+            class="about__links__item"
+            href={link.url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={link.logo} alt={link.label} title={link.label} />
+          </a>
+        ))
+      }
+    </div>
+  </div>
 </BaseLayout>

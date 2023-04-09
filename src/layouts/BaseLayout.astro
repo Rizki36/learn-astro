@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
 const { pageTitle } = Astro.props;
+const { withPadding = true, withMaxWidth = true } = Astro.props;
 ---
 
 <html lang="en">
@@ -14,7 +15,13 @@ const { pageTitle } = Astro.props;
   </head>
   <body>
     <Navigation />
-    <main class="main_wrapper">
+    <main
+      class={`
+      main_wrapper 
+      ${withPadding && "main_wrapper__with_padding"} 
+      ${withMaxWidth && "main_wrapper__with_max_width"}
+      `}
+    >
       <slot />
     </main>
   </body>

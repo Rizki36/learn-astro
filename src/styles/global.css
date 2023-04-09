@@ -14,6 +14,18 @@ html {
 .main_wrapper {
   margin-left: auto;
   margin-right: auto;
-  max-width: 1536px;
+}
+
+.main_wrapper__with_padding {
   padding: 12px 24px;
+}
+
+.main_wrapper__with_max_width {
+  max-width: 1536px;
+}
+
+.text-gradient {
+  background: linear-gradient(0deg, #1a1a1a 0%, #ffffff 70%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
