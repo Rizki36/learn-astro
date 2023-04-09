@@ -4,16 +4,46 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 ---
 
 <style>
-  .home__content {
+  .home__wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: calc(100vh - 100px);
   }
+
+  .text-gradient {
+    background: linear-gradient(0deg, #1a1a1a 0%, #ffffff 70%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .home__content {
+  }
+
+  .home__title {
+    color: #1a1a1a;
+  }
+
+  .home__content_footer {
+    display: flex;
+    justify-content: end;
+  }
+  .home__content_footer a {
+    color: #4c4c4c;
+    text-decoration: none;
+  }
 </style>
 
 <BaseLayout>
-  <div class="home__content">
-    <h1>Hello, <br /> My name is Fitra</h1>
+  <div class="home__wrapper">
+    <div class="home__content">
+      <div>
+        <h1 class="home__title text-gradient">Hello,</h1>
+        <h1 class="home__title text-gradient">My name is Fitra</h1>
+      </div>
+      <div class="home__content_footer">
+        <a href="/about" class="">About Me</a>
+      </div>
+    </div>
   </div>
 </BaseLayout>
