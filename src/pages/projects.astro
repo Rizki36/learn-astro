@@ -1,0 +1,105 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+import bepCalculator from "../images/projects/bep-calculator.png";
+import dikirim from "../images/projects/dikirim.png";
+import elibrary from "../images/projects/elibrary.png";
+import epolling from "../images/projects/epolling.png";
+import escroring from "../images/projects/escoring.png";
+import santriKita from "../images/projects/santri-kita.png";
+import inaf from "../images/projects/inaf.png";
+import learnerHub from "../images/projects/learners-hub.png";
+import moviewApp from "../images/projects/movie-app.png";
+
+const projects = [
+  {
+    title: "BEP Calculator",
+    img: bepCalculator,
+  },
+  {
+    title: "Dikirim.in",
+    img: dikirim,
+  },
+  {
+    title: "E-Library",
+    img: elibrary,
+  },
+  {
+    title: "E-Polling",
+    img: epolling,
+  },
+  {
+    title: "E-Scoring",
+    img: escroring,
+  },
+  {
+    title: "Inaf",
+    img: inaf,
+  },
+  {
+    title: "Learners Hub",
+    img: learnerHub,
+  },
+  {
+    title: "Movie App",
+    img: moviewApp,
+  },
+  {
+    title: "Satri Kita",
+    img: santriKita,
+  },
+];
+---
+
+<style>
+  .projects__title {
+    text-align: center;
+    margin: 64px 0;
+  }
+
+  .projects__wrapper_item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 32px;
+    row-gap: 32px;
+  }
+
+  .projects__item {
+    min-height: 300px;
+    width: 300px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    padding: 16px 16px 8px;
+  }
+
+  .projects__item img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    background-color: #fff;
+  }
+
+  .projects__item_title {
+    margin: 8px 0;
+  }
+</style>
+
+<BaseLayout>
+  <h1 class="projects__title">Projects</h1>
+
+  <div class="projects__wrapper_item">
+    {
+      projects.map((project) => {
+        return (
+          <div class="projects__item">
+            <img src={project.img} alt="Project img" />
+            <div>
+              <h4 class="projects__item_title">{project.title}</h4>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</BaseLayout>
