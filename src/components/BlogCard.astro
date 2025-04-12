@@ -1,0 +1,66 @@
+---
+const { post } = Astro.props;
+---
+
+<div class="blog-card">
+  <div class="category-tag" style={`background-color: ${post.frontmatter.categoryColor}`}>
+    {post.frontmatter.category}
+  </div>
+  <h2 class="post-title">
+    <a href={post.url}>{post.frontmatter.title}</a>
+  </h2>
+  <p class="post-excerpt">{post.frontmatter.excerpt}</p>
+  <div class="post-meta">
+    <span class="post-date">{post.frontmatter.date}</span>
+    <span class="post-readtime">.{post.frontmatter.minutesRead} min</span>
+  </div>
+</div>
+
+<style>
+  .blog-card {
+    margin-bottom: 3.5rem;
+    position: relative;
+  }
+  
+  .category-tag {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 0.75rem;
+  }
+  
+  .post-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 0.75rem 0;
+    line-height: 1.2;
+  }
+  
+  .post-title a {
+    color: #ffffff;
+    text-decoration: none;
+  }
+  
+  .post-title a:hover {
+    text-decoration: underline;
+  }
+  
+  .post-excerpt {
+    color: #c0c0c0;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    font-size: 1rem;
+  }
+  
+  .post-meta {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+  }
+  
+  .post-readtime {
+    margin-left: 0.25rem;
+  }
+</style> 

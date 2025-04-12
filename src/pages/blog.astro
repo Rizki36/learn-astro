@@ -1,17 +1,59 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-const posts = await Astro.glob("./posts/*.md");
+import BlogCard from "../components/BlogCard.astro";
+// get all blog posts from pages/posts
+const blogPosts = await Astro.glob('../pages/posts/*.md');
 ---
 
-<BaseLayout>
-  <h1>Helo this my blog</h1>
-  <ul>
-    {
-      posts.map((post) => (
-        <li>
-          <a href={post.url}>{post.frontmatter.title}</a>
-        </li>
-      ))
-    }
-  </ul>
+<BaseLayout withPadding={false}>
+  <div class="blog-container">
+    <div class="blog-header">
+      <h1>Blog</h1>
+      <span class="date-time">Last updated: {new Date().toLocaleString()}</span>
+    </div>
+    
+    <div class="blog-posts">
+      {blogPosts.map((post) => <BlogCard post={post} />)}
+    </div>
+  </div>
 </BaseLayout>
+
+<style>
+  .blog-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+    color: #e0e0e0;
+    min-height: 100vh;
+  }
+  
+  .blog-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .author {
+    color: #a0a0a0;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 1rem 0;
+    color: #ffffff;
+  }
+  
+  .date-time {
+    color: #a0a0a0;
+    font-size: 1rem;
+    display: block;
+    margin-top: 1rem;
+  }
+  
+  .blog-posts {
+    margin-top: 3rem;
+  }
+</style>
