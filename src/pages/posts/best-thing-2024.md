@@ -2,7 +2,7 @@
 layout: "../../layouts/ArticleLayout.astro"
 title: "The best thing that happened in 2024 (Dummy)"
 pubDate: 2024-12-27
-date: "27 December 2024"
+createdAt: 2024-12-27
 minutesRead: "6"
 category: "LIFESTYLE"
 categoryColor: "#d1fae5"

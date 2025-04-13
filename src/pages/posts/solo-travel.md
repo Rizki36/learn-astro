@@ -2,7 +2,7 @@
 layout: "../../layouts/ArticleLayout.astro"
 title: "The Art of Solo Travel: Embracing Independence and Discovery (Dummy)"
 pubDate: 2024-03-23
-date: "23 March 2024"
+createdAt: 2024-03-23
 minutesRead: "8"
 category: "TRAVEL"
 categoryColor: "#e0f2fe"

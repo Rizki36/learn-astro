@@ -1,59 +1,288 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import BlogCard from "../components/BlogCard.astro";
-// get all blog posts from pages/posts
-const blogPosts = await Astro.glob('../pages/posts/*.md');
+
+// SEO metadata for blog page
+const pageTitle = "Blog";
+const metaDescription =
+	"Read my latest articles and thoughts on web development, programming, and technology.";
+const metaKeywords =
+	"blog, web development, programming, react, nextjs, typescript, javascript, laravel, tech articles";
+
+// Get all blog posts from both blog and posts directories
+const blogPosts = await Astro.glob("../pages/blog/*.md");
+const postsPosts = await Astro.glob("../pages/posts/*.md");
+
+// Function to calculate minutes to read
+function calculateReadingTime(content: string): number {
+	// Average reading speed (words per minute)
+	const wordsPerMinute = 200;
+	// Get the text content without code blocks (approximate)
+	const text = content
+		.replace(/```[\s\S]*?```/g, "") // Remove code blocks
+		.replace(/\s+/g, " "); // Normalize whitespace
+
+	// Count words (split by spaces)
+	const words = text.split(" ").length;
+
+	// Calculate reading time in minutes
+	const minutes = Math.ceil(words / wordsPerMinute);
+
+	return minutes < 1 ? 1 : minutes;
+}
+
+// Combine both arrays and sort by date (newest first)
+const allPosts = [...blogPosts, ...postsPosts].sort((a, b) => {
+	// Check if the posts have the pubDate
+	const dateA = new Date(a.frontmatter.pubDate).getTime();
+	const dateB = new Date(b.frontmatter.pubDate || b.frontmatter.date).getTime();
+	return dateB - dateA;
+});
+
+// Map posts to a consistent format
+const posts = allPosts.map((post) => {
+	const { frontmatter, url, rawContent } = post;
+
+	// Extract slug from the URL
+	const urlParts = url ? url.split("/") : [];
+	const slug = urlParts[urlParts.length - 2] || "";
+
+	// Calculate minutes to read if not already present
+	let minutesRead = frontmatter.minutesRead || "";
+	if (!minutesRead && typeof rawContent === "function") {
+		const content = rawContent();
+		minutesRead = String(calculateReadingTime(content));
+	}
+
+	return {
+		title: frontmatter.title,
+		description: frontmatter.description || frontmatter.excerpt || "",
+		date: frontmatter.pubDate,
+		author: frontmatter.author || "Fitra",
+		slug: slug,
+		category: frontmatter.category || "",
+		tags: frontmatter.tags || [],
+		image: frontmatter.featuredImg || frontmatter.image || "",
+		url: url || `/blog/${slug}`,
+		minutesRead: minutesRead,
+	};
+});
+
+// Structured data for blog listing (JSON-LD)
+const blogStructuredData = {
+	"@context": "https://schema.org",
+	"@type": "Blog",
+	headline: "DevFitra's Blog",
+	description: metaDescription,
+	author: {
+		"@type": "Person",
+		name: "Fitra",
+	},
+	blogPost: posts.map((post) => ({
+		"@type": "BlogPosting",
+		headline: post.title,
+		description: post.description,
+		datePublished: post.date,
+	})),
+};
 ---
 
-<BaseLayout withPadding={false}>
-  <div class="blog-container">
-    <div class="blog-header">
-      <h1>Blog</h1>
-      <span class="date-time">Last updated: {new Date().toLocaleString()}</span>
-    </div>
-    
-    <div class="blog-posts">
-      {blogPosts.map((post) => <BlogCard post={post} />)}
-    </div>
-  </div>
-</BaseLayout>
-
 <style>
-  .blog-container {
-    max-width: 700px;
+  .blog__container {
+    padding: 2rem;
+    max-width: 800px;
     margin: 0 auto;
-    padding: 4rem 1rem;
-    color: #e0e0e0;
-    min-height: 100vh;
   }
-  
-  .blog-header {
+
+  .blog__header {
+    margin-bottom: 3rem;
     text-align: center;
-    margin-bottom: 4rem;
   }
-  
-  .author {
-    color: #a0a0a0;
-    font-size: 1rem;
-    display: block;
+
+  .blog__title {
     margin-bottom: 1rem;
   }
-  
-  h1 {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 1rem 0;
-    color: #ffffff;
+
+  .blog__description {
+    color: var(--color-text-light);
+  }
+
+  .blog__post-list {
+    display: grid;
+    gap: 2rem;
+  }
+
+  .blog__post {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .blog__post:hover {
+    transform: translateY(-5px);
+  }
+
+  .blog__post-title {
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+  }
+
+  .blog__post-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .blog__post-date,
+  .blog__post-read-time {
+    font-size: 0.875rem;
+    color: var(--color-text-light);
   }
   
-  .date-time {
-    color: #a0a0a0;
-    font-size: 1rem;
-    display: block;
-    margin-top: 1rem;
+  .blog__post-category {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 100px;
+    background-color: #333;
+    color: #fff;
   }
-  
-  .blog-posts {
-    margin-top: 3rem;
+
+  .blog__post-meta-separator {
+    color: var(--color-text-light);
+    font-size: 0.875rem;
+  }
+
+  .blog__post-description {
+    margin-bottom: 1rem;
+  }
+
+  .blog__post-link {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  .blog__post-link:hover {
+    background-color: #444;
+  }
+
+  .blog__post-featured {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 2rem;
+    background-color: var(--color-border);
+  }
+
+  .blog__post-featured-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .blog__post-featured-content {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .blog__container {
+      padding: 1rem;
+    }
   }
 </style>
+
+<BaseLayout
+  pageTitle={pageTitle}
+  metaDescription={metaDescription}
+  metaKeywords={metaKeywords}
+>
+  <div class="blog__container">
+    <header class="blog__header">
+      <h1 class="blog__title text-gradient">Blog</h1>
+      <p class="blog__description">Thoughts, ideas, and insights on web development and technology.</p>
+    </header>
+
+    {posts.length > 0 && posts[0] && (
+      <article class="blog__post-featured">
+        {posts[0].image && (
+          <img 
+            class="blog__post-featured-image" 
+            src={posts[0].image} 
+            alt={posts[0].title} 
+          />
+        )}
+        <div class="blog__post-featured-content">
+          <h2 class="blog__post-title">{posts[0].title}</h2>
+          <div class="blog__post-meta">
+            <time class="blog__post-date" datetime={posts[0].date}>
+              {new Date(posts[0].date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+            {posts[0].minutesRead && (
+              <>
+                <span class="blog__post-meta-separator">•</span>
+                <span class="blog__post-read-time">{posts[0].minutesRead} min read</span>
+              </>
+            )}
+            {posts[0].category && (
+              <>
+                <span class="blog__post-meta-separator">•</span>
+                <span class="blog__post-category">{posts[0].category}</span>
+              </>
+            )}
+          </div>
+          <p class="blog__post-description">{posts[0].description}</p>
+          <a href={posts[0].url} class="blog__post-link">Read more</a>
+        </div>
+      </article>
+    )}
+
+    <div class="blog__post-list">
+      {posts.length === 0 ? (
+        <p>No posts yet. Check back soon!</p>
+      ) : (
+        posts.slice(1).map(post => (
+          <article class="blog__post">
+            <h2 class="blog__post-title">{post.title}</h2>
+            <div class="blog__post-meta">
+              <time class="blog__post-date" datetime={post.date}>
+                {new Date(post.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+              {post.minutesRead && (
+                <>
+                  <span class="blog__post-meta-separator">•</span>
+                  <span class="blog__post-read-time">{post.minutesRead} min read</span>
+                </>
+              )}
+              {post.category && (
+                <>
+                  <span class="blog__post-meta-separator">•</span>
+                  <span class="blog__post-category">{post.category}</span>
+                </>
+              )}
+            </div>
+            <p class="blog__post-description">{post.description}</p>
+            <a href={post.url} class="blog__post-link">Read more</a>
+          </article>
+        ))
+      )}
+    </div>
+  </div>
+
+  {/* Add JSON-LD structured data */}
+  <script type="application/ld+json" set:html={JSON.stringify(blogStructuredData)} />
+</BaseLayout>

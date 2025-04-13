@@ -2,7 +2,7 @@
 layout: "../../layouts/ArticleLayout.astro"
 title: "How I pulled off a noise generator plugin (Dummy)"
 pubDate: 2024-12-01
-date: "1 December 2024"
+createdAt: 2024-12-01
 minutesRead: "4"
 category: "DESIGN"
 categoryColor: "#fce7f3"

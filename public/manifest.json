@@ -1,0 +1,21 @@
+{
+	"name": "DevFitra - Full Stack Developer",
+	"short_name": "DevFitra",
+	"description": "Portfolio and personal website of Fitra, a passionate Full Stack Developer specializing in modern web technologies.",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#161616",
+	"theme_color": "#161616",
+	"icons": [
+		{
+			"src": "/icons/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/icons/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	]
+}

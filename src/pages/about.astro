@@ -2,72 +2,80 @@
 import me from "../images/me.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
+// SEO metadata for about page
+const pageTitle = "About Me";
+const metaDescription =
+	"Learn more about Fitra - a skilled Full Stack Developer with expertise in React, NextJS, TypeScript, Laravel and more. View my skills and professional background.";
+const metaKeywords =
+	"Fitra, about me, developer skills, full stack developer, react, nextjs, typescript, laravel, portfolio";
+const ogImage = me;
+
 // Skills
 import javascript from "../images/skills/javascript.svg";
-import typescript from "../images/skills/typescript.svg";
 import laravel from "../images/skills/laravel.svg";
+import mysql from "../images/skills/mysql.svg";
 import nextJs from "../images/skills/nextjs.svg";
+import postgreeSql from "../images/skills/postgreesql.svg";
 import prisma from "../images/skills/prisma.svg";
 import react from "../images/skills/react.svg";
-import mysql from "../images/skills/mysql.svg";
-import postgreeSql from "../images/skills/postgreesql.svg";
+import typescript from "../images/skills/typescript.svg";
 
 // Links
 import github from "../images/github.svg";
-import linkedin from "../images/linkedin.svg";
 import instgram from "../images/instagram.svg";
+import linkedin from "../images/linkedin.svg";
 
 const skills = [
-  {
-    label: "React",
-    logo: react,
-  },
-  {
-    label: "Prisma",
-    logo: prisma,
-  },
-  {
-    label: "NextJs",
-    logo: nextJs,
-  },
-  {
-    label: "JavaScript",
-    logo: javascript,
-  },
-  {
-    label: "TypeScript",
-    logo: typescript,
-  },
-  {
-    label: "Laravel",
-    logo: laravel,
-  },
-  {
-    label: "PostgreeSql",
-    logo: postgreeSql,
-  },
-  {
-    label: "Mysql",
-    logo: mysql,
-  },
+	{
+		label: "React",
+		logo: react,
+	},
+	{
+		label: "Prisma",
+		logo: prisma,
+	},
+	{
+		label: "NextJs",
+		logo: nextJs,
+	},
+	{
+		label: "JavaScript",
+		logo: javascript,
+	},
+	{
+		label: "TypeScript",
+		logo: typescript,
+	},
+	{
+		label: "Laravel",
+		logo: laravel,
+	},
+	{
+		label: "PostgreeSql",
+		logo: postgreeSql,
+	},
+	{
+		label: "Mysql",
+		logo: mysql,
+	},
 ];
 
 const links = [
-  {
-    label: "Github",
-    url: "https://github.com/Rizki36",
-    logo: github,
-  },
-  {
-    label: "Linkedin",
-    url: "https://www.linkedin.com/in/rizki36/",
-    logo: linkedin,
-  },
-  {
-    label: "Instagram",
-    url: "https://www.instagram.com/fitra36_",
-    logo: instgram,
-  },
+	{
+		label: "Github",
+		url: "https://github.com/Rizki36",
+		logo: github,
+	},
+	{
+		label: "Linkedin",
+		url: "https://www.linkedin.com/in/rizki36/",
+		logo: linkedin,
+	},
+	{
+		label: "Instagram",
+		url: "https://www.instagram.com/fitra36_",
+		logo: instgram,
+	},
 ];
 ---
 
@@ -163,7 +171,15 @@ const links = [
   }
 </style>
 
-<BaseLayout withPadding={false} withMaxWidth={false}>
+<BaseLayout 
+  withPadding={false} 
+  withMaxWidth={false}
+  pageTitle={pageTitle}
+  metaDescription={metaDescription}
+  metaKeywords={metaKeywords}
+  ogImage={ogImage}
+  ogType="profile"
+>
   <div class="about">
     <div class="about__image_wrapper">
       <img src={me} alt="Me" />

@@ -2,7 +2,7 @@
 layout: "../../layouts/ArticleLayout.astro"
 title: "Building a URL shortener (Dummy)"
 pubDate: 2024-12-23
-date: "23 December 2024"
+createdAt: 2024-12-23
 minutesRead: "10"
 category: "TECHNOLOGY"
 categoryColor: "#dbeafe"

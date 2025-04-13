@@ -2,27 +2,27 @@
 
 /* Global styles */
 :root {
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
-  --color-text: #e0e0e0;
-  --color-text-light: #a0a0a0;
-  --color-background: #161616;
-  --color-border: #333333;
-  --spacing-base: 1rem;
+	--font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+	--font-serif: Georgia, "Times New Roman", serif;
+	--color-text: #e0e0e0;
+	--color-text-light: #a0a0a0;
+	--color-background: #161616;
+	--color-border: #333333;
+	--spacing-base: 1rem;
 }
 
 * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-  font-family: var(--font-sans);
-  line-height: 1.6;
-  color: var(--color-text);
-  background-color: var(--color-background);
+	font-family: var(--font-sans);
+	line-height: 1.6;
+	color: var(--color-text);
+	background-color: var(--color-background);
 }
 
 h1,
@@ -31,93 +31,93 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 500;
-  line-height: 1.2;
-  margin-bottom: var(--spacing-base);
+	font-weight: 500;
+	line-height: 1.2;
+	margin-bottom: var(--spacing-base);
 }
 
 h1 {
-  font-size: 2.5rem;
+	font-size: 2.5rem;
 }
 
 h2 {
-  font-size: 1.8rem;
-  margin-top: 2.5rem;
+	font-size: 1.8rem;
+	margin-top: 2.5rem;
 }
 
 h3 {
-  font-size: 1.5rem;
+	font-size: 1.5rem;
 }
 
 p {
-  margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+	max-width: 100%;
+	height: auto;
+	display: block;
 }
 
 .main_wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .main_wrapper__with_padding {
-  padding: 0;
+	padding: 0;
 }
 
 .main_wrapper__with_max_width {
-  max-width: 1200px;
-  margin: 0 auto;
+	max-width: 1200px;
+	margin: 0 auto;
 }
 
 /* Blog specific styles */
 article h2 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--color-text-light);
-  margin-bottom: 1.5rem;
+	font-size: 1.1rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: var(--color-text-light);
+	margin-bottom: 1.5rem;
 }
 
 article h2 + p {
-  font-size: 1.1rem;
-  line-height: 1.8;
+	font-size: 1.1rem;
+	line-height: 1.8;
 }
 
 article p {
-  margin-bottom: 1.5rem;
+	margin-bottom: 1.5rem;
 }
 
 @media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
+	h1 {
+		font-size: 2rem;
+	}
 
-  h2 {
-    font-size: 1.5rem;
-  }
+	h2 {
+		font-size: 1.5rem;
+	}
 
-  .main_wrapper__with_padding {
-    padding: 0 1rem;
-  }
+	.main_wrapper__with_padding {
+		padding: 0 1rem;
+	}
 }
 
 .text-gradient {
-  background: linear-gradient(0deg, #1a1a1a 0%, #ffffff 70%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+	background: linear-gradient(0deg, #1a1a1a 0%, #ffffff 70%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .text-center {
-  text-align: center;
+	text-align: center;
 }

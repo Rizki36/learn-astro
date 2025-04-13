@@ -1,22 +1,70 @@
 ---
 import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
-const { pageTitle } = Astro.props;
 const {
-  withPadding = true,
-  withMaxWidth = true,
-  className,
-  style,
+	pageTitle,
+	metaDescription,
+	metaKeywords,
+	ogImage = "/images/og-image.jpg",
+	ogType = "website",
+	twitterCard = "summary_large_image",
+	canonicalURL = Astro.url.href,
+	themeColor = "#161616",
 } = Astro.props;
+const {
+	withPadding = true,
+	withMaxWidth = true,
+	className,
+	style,
+} = Astro.props;
+
+// Default description and title if not provided
+const siteTitle = "DevFitra - Full Stack Developer";
+const siteDescription =
+	"Portfolio and personal website of Fitra, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.";
+const siteKeywords =
+	"developer, full stack, javascript, typescript, react, nextjs, laravel, portfolio, web development";
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="generator" content={Astro.generator} />
-    <title>{pageTitle || "DevFitra"}</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>{pageTitle ? `${pageTitle} | DevFitra` : siteTitle}</title>
+    <meta name="title" content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle} />
+    <meta name="description" content={metaDescription || siteDescription} />
+    <meta name="keywords" content={metaKeywords || siteKeywords} />
+    <meta name="author" content="Fitra" />
+    
+    <!-- Theme Color for browsers -->
+    <meta name="theme-color" content={themeColor} />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:title" content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle} />
+    <meta property="og:description" content={metaDescription || siteDescription} />
+    <meta property="og:image" content={new URL(ogImage, Astro.url)} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content={twitterCard} />
+    <meta property="twitter:url" content={Astro.url.href} />
+    <meta property="twitter:title" content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle} />
+    <meta property="twitter:description" content={metaDescription || siteDescription} />
+    <meta property="twitter:image" content={new URL(ogImage, Astro.url)} />
+    
+    <!-- Additional SEO tags -->
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json" />
   </head>
   <body>
     <Navigation />
