@@ -1,0 +1,182 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+
+// SEO metadata for portfolio page
+const pageTitle = "Portfolio";
+const metaDescription = 
+  "Browse through my portfolio of web development projects. Showcasing my skills in React, NextJS, TypeScript, and more.";
+const metaKeywords = 
+  "portfolio, web development projects, full stack developer, react projects, nextjs projects, typescript, javascript, case studies";
+
+// Portfolio projects data
+const projects = [
+  {
+    title: "Project One",
+    description: "A full-stack web application with React frontend and Node.js backend.",
+    image: "/images/portfolio/project1.jpg",
+    tags: ["React", "Node.js", "MongoDB"],
+    link: "/portfolio/project-one",
+    github: "https://github.com/username/project-one"
+  },
+  {
+    title: "Project Two",
+    description: "E-commerce platform built with NextJS and integrated payment processing.",
+    image: "/images/portfolio/project2.jpg",
+    tags: ["NextJS", "Stripe", "TypeScript"],
+    link: "/portfolio/project-two",
+    github: "https://github.com/username/project-two"
+  },
+  {
+    title: "Project Three",
+    description: "Real-time dashboard with data visualization built using React and D3.js.",
+    image: "/images/portfolio/project3.jpg",
+    tags: ["React", "D3.js", "Firebase"],
+    link: "/portfolio/project-three",
+    github: "https://github.com/username/project-three"
+  }
+];
+---
+
+<style>
+  .portfolio-header {
+    text-align: center;
+    margin: 2rem 0 3rem;
+  }
+
+  .portfolio-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .portfolio-description {
+    font-size: 1.2rem;
+    color: #4c4c4c;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .project-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .project-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  .project-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-description {
+    color: #4c4c4c;
+    margin-bottom: 1rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .project-tag {
+    background-color: #f0f0f0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .project-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #3a3a3a;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .project-link:hover {
+    background-color: #555;
+  }
+
+  .github-link {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+
+  .github-link:hover {
+    background-color: #ddd;
+  }
+</style>
+
+<BaseLayout
+  pageTitle={pageTitle}
+  metaDescription={metaDescription}
+  metaKeywords={metaKeywords}
+>
+  <div class="portfolio-container">
+    <header class="portfolio-header">
+      <h1 class="portfolio-title text-gradient">My Portfolio</h1>
+      <p class="portfolio-description">
+        A collection of my latest work showcasing my skills and expertise in web development.
+        Each project represents unique challenges and solutions I've implemented.
+      </p>
+    </header>
+
+    <div class="projects-grid">
+      {projects.map((project) => (
+        <div class="project-card">
+          <img 
+            src={project.image || 'https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'} 
+            alt={project.title} 
+            class="project-image"
+            onerror="this.src='https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
+          />
+          <div class="project-content">
+            <h2 class="project-title">{project.title}</h2>
+            <p class="project-description">{project.description}</p>
+            <div class="project-tags">
+              {project.tags.map((tag) => (
+                <span class="project-tag">{tag}</span>
+              ))}
+            </div>
+            <div class="project-links">
+              <a href={project.link} class="project-link">View Project</a>
+              <a href={project.github} class="project-link github-link">GitHub</a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</BaseLayout>
