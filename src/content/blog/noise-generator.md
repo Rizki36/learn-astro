@@ -1,13 +1,13 @@
 ---
-layout: "../../layouts/ArticleLayout.astro"
 title: "How I pulled off a noise generator plugin (Dummy)"
+excerpt: "As the year comes to an end we try I try to come to terms with how much I have achieved. Here are three tips I can tell you..."
 pubDate: 2024-12-01
 createdAt: 2024-12-01
 minutesRead: "4"
 category: "DESIGN"
 categoryColor: "#fce7f3"
-excerpt: "As the year comes to an end we try I try to come to terms with how much I have achieved. Here are three tips I can tell you..."
 featuredImg: "https://placehold.co/800x600/252525/CCCCCC?text=DESIGN"
+tags: ["design", "audio", "plugin", "web development"]
 ---
 
 # How I pulled off a noise generator plugin

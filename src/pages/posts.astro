@@ -1,88 +1,112 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from 'astro:content';
 
 // SEO metadata for blog page
 const pageTitle = "Blog";
 const metaDescription =
-	"Read my latest articles and thoughts on web development, programming, and technology.";
+    "Read my latest articles and thoughts on web development, programming, and technology.";
 const metaKeywords =
-	"blog, web development, programming, react, nextjs, typescript, javascript, laravel, tech articles";
-
-// Get all blog posts from both blog and posts directories
-const blogPosts = await Astro.glob("../pages/blog/*.md");
-const postsPosts = await Astro.glob("../pages/posts/*.md");
+    "blog, web development, programming, react, nextjs, typescript, javascript, laravel, tech articles";
 
 // Function to calculate minutes to read
 function calculateReadingTime(content: string): number {
-	// Average reading speed (words per minute)
-	const wordsPerMinute = 200;
-	// Get the text content without code blocks (approximate)
-	const text = content
-		.replace(/```[\s\S]*?```/g, "") // Remove code blocks
-		.replace(/\s+/g, " "); // Normalize whitespace
+    // Average reading speed (words per minute)
+    const wordsPerMinute = 200;
+    // Get the text content without code blocks (approximate)
+    const text = content
+        .replace(/```[\s\S]*?```/g, "") // Remove code blocks
+        .replace(/\s+/g, " "); // Normalize whitespace
 
-	// Count words (split by spaces)
-	const words = text.split(" ").length;
+    // Count words (split by spaces)
+    const words = text.split(" ").length;
 
-	// Calculate reading time in minutes
-	const minutes = Math.ceil(words / wordsPerMinute);
+    // Calculate reading time in minutes
+    const minutes = Math.ceil(words / wordsPerMinute);
 
-	return minutes < 1 ? 1 : minutes;
+    return minutes < 1 ? 1 : minutes;
 }
 
-// Combine both arrays and sort by date (newest first)
-const allPosts = [...blogPosts, ...postsPosts].sort((a, b) => {
-	// Check if the posts have the pubDate
-	const dateA = new Date(a.frontmatter.pubDate).getTime();
-	const dateB = new Date(b.frontmatter.pubDate || b.frontmatter.date).getTime();
-	return dateB - dateA;
+// Get posts from article collection
+const articlePosts = await getCollection('article', ({ data }) => {
+  // Filter out draft posts in production
+  return import.meta.env.PROD ? !data.draft : true;
 });
 
-// Map posts to a consistent format
-const posts = allPosts.map((post) => {
-	const { frontmatter, url, rawContent } = post;
-
-	// Extract slug from the URL
-	const urlParts = url ? url.split("/") : [];
-	const slug = urlParts[urlParts.length - 2] || "";
-
-	// Calculate minutes to read if not already present
-	let minutesRead = frontmatter.minutesRead || "";
-	if (!minutesRead && typeof rawContent === "function") {
-		const content = rawContent();
-		minutesRead = String(calculateReadingTime(content));
-	}
-
-	return {
-		title: frontmatter.title,
-		description: frontmatter.description || frontmatter.excerpt || "",
-		date: frontmatter.pubDate,
-		author: frontmatter.author || "Fitra",
-		slug: slug,
-		category: frontmatter.category || "",
-		tags: frontmatter.tags || [],
-		image: frontmatter.featuredImg || frontmatter.image || "",
-		url: url || `/blog/${slug}`,
-		minutesRead: minutesRead,
-	};
+// Map article posts to a common format
+const normalizedArticlePosts = articlePosts.map(post => {
+  const minutesRead = post.data.minutesRead || calculateReadingTime(post.body);
+  
+  return {
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.pubDate,
+    author: post.data.author || "Fitra",
+    slug: post.slug,
+    collectionType: 'article',
+    category: post.data.category || "",
+    categoryColor: null, // Blog posts don't have category colors
+    tags: post.data.tags || [],
+    image: post.data.featuredImage || "",
+    url: `/article/${post.slug}`,
+    minutesRead: minutesRead,
+  };
 });
+
+// Get posts from blog collection 
+const blogPosts = await getCollection('blog', ({ data }) => {
+  // Filter out draft posts in production
+  return import.meta.env.PROD ? !data.draft : true;
+});
+
+// Map lifestyle posts to the same format
+const normalizedLifestylePosts = blogPosts.map(post => {
+  // Convert minutesRead to number if it's a string
+  let minutesToRead = post.data.minutesRead;
+  if (typeof minutesToRead === 'string') {
+    minutesToRead = parseInt(minutesToRead) || calculateReadingTime(post.body);
+  } else if (!minutesToRead) {
+    minutesToRead = calculateReadingTime(post.body);
+  }
+  
+  return {
+    title: post.data.title,
+    description: post.data.excerpt, // Use excerpt as description for posts
+    date: post.data.pubDate,
+    author: post.data.author || "Fitra",
+    slug: post.slug,
+    collectionType: 'blog',
+    category: post.data.category || "",
+    categoryColor: post.data.categoryColor || null,
+    tags: post.data.tags || [],
+    image: post.data.featuredImg || "", // Note the different field name
+    url: `/blog/${post.slug}`, // Different URL structure for posts
+    minutesRead: minutesToRead,
+  };
+});
+
+// Combine both post types
+const combinedPosts = [...normalizedArticlePosts, ...normalizedLifestylePosts];
+
+// Sort all posts by date (newest first)
+const posts = combinedPosts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 // Structured data for blog listing (JSON-LD)
-const blogStructuredData = {
-	"@context": "https://schema.org",
-	"@type": "Blog",
-	headline: "DevFitra's Blog",
-	description: metaDescription,
-	author: {
-		"@type": "Person",
-		name: "Fitra",
-	},
-	blogPost: posts.map((post) => ({
-		"@type": "BlogPosting",
-		headline: post.title,
-		description: post.description,
-		datePublished: post.date,
-	})),
+const postStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    headline: "DevFitra's Blog",
+    description: metaDescription,
+    author: {
+        "@type": "Person",
+        name: "Fitra",
+    },
+    blogPost: posts.map((post) => ({
+        "@type": "BlogPosting",
+        headline: post.title,
+        description: post.description,
+        datePublished: post.date.toISOString(),
+    })),
 };
 ---
 
@@ -205,7 +229,7 @@ const blogStructuredData = {
 >
   <div class="blog__container">
     <header class="blog__header">
-      <h1 class="blog__title text-gradient">Blog</h1>
+      <h1 class="blog__title text-gradient">Blog & Article</h1>
       <p class="blog__description">Thoughts, ideas, and insights on web development and technology.</p>
     </header>
 
@@ -215,14 +239,15 @@ const blogStructuredData = {
           <img 
             class="blog__post-featured-image" 
             src={posts[0].image} 
-            alt={posts[0].title} 
+            alt={posts[0].title}
+            onerror="this.src='https://placehold.co/800x400/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
           />
         )}
         <div class="blog__post-featured-content">
           <h2 class="blog__post-title">{posts[0].title}</h2>
           <div class="blog__post-meta">
-            <time class="blog__post-date" datetime={posts[0].date}>
-              {new Date(posts[0].date).toLocaleDateString('en-US', {
+            <time class="blog__post-date" datetime={posts[0].date.toISOString()}>
+              {posts[0].date.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
@@ -237,7 +262,9 @@ const blogStructuredData = {
             {posts[0].category && (
               <>
                 <span class="blog__post-meta-separator">•</span>
-                <span class="blog__post-category">{posts[0].category}</span>
+                <span class="blog__post-category" style={posts[0].categoryColor ? `background-color: ${posts[0].categoryColor}; color: #333;` : ''}>
+                  {posts[0].category}
+                </span>
               </>
             )}
           </div>
@@ -255,8 +282,8 @@ const blogStructuredData = {
           <article class="blog__post">
             <h2 class="blog__post-title">{post.title}</h2>
             <div class="blog__post-meta">
-              <time class="blog__post-date" datetime={post.date}>
-                {new Date(post.date).toLocaleDateString('en-US', {
+              <time class="blog__post-date" datetime={post.date.toISOString()}>
+                {post.date.toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric'
@@ -271,7 +298,9 @@ const blogStructuredData = {
               {post.category && (
                 <>
                   <span class="blog__post-meta-separator">•</span>
-                  <span class="blog__post-category">{post.category}</span>
+                  <span class="blog__post-category" style={post.categoryColor ? `background-color: ${post.categoryColor}; color: #333;` : ''}>
+                  {post.category}
+                </span>
                 </>
               )}
             </div>
@@ -284,5 +313,5 @@ const blogStructuredData = {
   </div>
 
   {/* Add JSON-LD structured data */}
-  <script type="application/ld+json" set:html={JSON.stringify(blogStructuredData)} />
+  <script type="application/ld+json" set:html={JSON.stringify(postStructuredData)} />
 </BaseLayout>

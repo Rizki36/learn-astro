@@ -1,13 +1,13 @@
 ---
-layout: "../../layouts/ArticleLayout.astro"
 title: "Building a URL shortener (Dummy)"
+description: "I used Nextjs to build a simple URL Shortener and it looks really great and here's the stack I used to build this project. Learn about the implementation details and key features."
 pubDate: 2024-12-23
-createdAt: 2024-12-23
-minutesRead: "10"
+updatedDate: 2024-12-23
+author: "Fitra"
+featuredImage: "https://placehold.co/800x600/252525/CCCCCC?text=TECHNOLOGY"
 category: "TECHNOLOGY"
-categoryColor: "#dbeafe"
-excerpt: "I used Nextjs to build a simple URL Shortener and it looks really great and here's the stack I used to build this project. Learn about the implementation details and key features."
-featuredImg: "https://placehold.co/800x600/252525/CCCCCC?text=TECHNOLOGY"
+tags: ["nextjs", "typescript", "mongodb", "web development", "url shortener"]
+minutesRead: 10
 ---
 
 # Building a URL shortener

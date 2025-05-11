@@ -1,0 +1,187 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+// Generate static paths for all portfolio items
+export async function getStaticPaths() {
+  const portfolioEntries = await getCollection('portfolio');
+  return portfolioEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+// Get the portfolio entry from props
+const { entry }: { entry: import('astro:content').CollectionEntry<'portfolio'> } = Astro.props;
+const { Content } = await entry.render();
+
+// Format the date
+const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+});
+---
+
+<style>
+  .project-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  .project-header {
+    margin-bottom: 2rem;
+  }
+
+  .project-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #666;
+  }
+
+  .project-date {
+    font-style: italic;
+  }
+
+  .project-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-tag {
+    background-color: #f0f0f0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: #666;
+  }
+
+  .project-links {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .project-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #3a3a3a;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .project-link:hover {
+    background-color: #555;
+  }
+
+  .github-link {
+    background-color: #f0f0f0;
+    color: #333;
+  }
+
+  .github-link:hover {
+    background-color: #ddd;
+  }
+
+  .content {
+    line-height: 1.7;
+  }
+
+  .content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+  }
+
+  .content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .content ul {
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .content li {
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    text-decoration: none;
+    color: #3a3a3a;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<BaseLayout
+  pageTitle={entry.data.title}
+  metaDescription={entry.data.description}
+  metaKeywords={entry.data.technologies.join(", ")}
+  ogImage={entry.data.image}
+>
+  <div class="project-container">
+    <article>
+      <header class="project-header">
+        <h1 class="project-title text-gradient">{entry.data.title}</h1>
+        <div class="project-meta">
+          <span class="project-date">Completed on {formattedDate}</span>
+        </div>
+        <img 
+          src={entry.data.image} 
+          alt={entry.data.title} 
+          class="project-image"
+          onerror={`this.src='https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;`}
+        />
+        <div class="project-tags">
+          {entry.data.technologies.map(tech => (
+            <span class="project-tag">{tech}</span>
+          ))}
+        </div>
+        <div class="project-links">
+          {entry.data.liveUrl && 
+            <a href={entry.data.liveUrl} class="project-link" target="_blank" rel="noopener noreferrer">
+              Live Demo
+            </a>
+          }
+          {entry.data.github && 
+            <a href={entry.data.github} class="project-link github-link" target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </a>
+          }
+        </div>
+      </header>
+      
+      <div class="content">
+        <Content />
+      </div>
+      
+      <a href="/portfolio" class="back-link">← Back to Portfolio</a>
+    </article>
+  </div>
+</BaseLayout>

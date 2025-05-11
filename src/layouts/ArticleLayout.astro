@@ -1,207 +1,192 @@
 ---
-import RelatedPosts from "../components/RelatedPosts.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "./BaseLayout.astro";
 
 const { frontmatter } = Astro.props;
+const {
+	title,
+	description,
+	pubDate,
+	author = "Fitra",
+	minutesRead,
+	image,
+	tags = [],
+} = frontmatter;
+
+// Format the date
+const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
+	year: "numeric",
+	month: "long",
+	day: "numeric",
+});
+
+// Construct structured data for the blog post (JSON-LD)
+const postStructuredData: {
+	"@context": string;
+	"@type": string;
+	headline: string;
+	description: string;
+	datePublished: string;
+	author: {
+		"@type": string;
+		name: string;
+	};
+	publisher: {
+		"@type": string;
+		name: string;
+		url: string;
+	};
+	keywords: string;
+	image?: string;
+} = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	headline: title,
+	description: description,
+	datePublished: pubDate,
+	author: {
+		"@type": "Person",
+		name: author,
+	},
+	publisher: {
+		"@type": "Person",
+		name: "Fitra",
+		url: "https://yourwebsite.com",
+	},
+	keywords: tags.join(", "),
+};
+
+// If there's a blog post image, add it to the structured data
+if (image) {
+	postStructuredData.image = new URL(image, Astro.url).toString();
+}
 ---
 
-<BaseLayout pageTitle={frontmatter.title} withMaxWidth={false}>
-  <article class="article-container">
-    <header class="article-header">
-      <div class="header-content">
-        <h1 class="article-title">{frontmatter.title}</h1>
-        <p class="article-subtitle">{frontmatter.excerpt}</p>
-
-        <div class="article-meta">
-          <div class="meta-left">
-            <span
-              class="category-badge"
-              style={`background-color: ${
-                frontmatter.categoryColor || "#333333"
-              }; color: #000;`}>{frontmatter.category}</span
-            >
-          </div>
-          <div class="meta-right">
-            {
-              // formatted date
-              frontmatter.pubDate ? (
-                <time>
-                  {new Date(frontmatter.pubDate).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-              ) : null
-            }
-          </div>
-        </div>
-      </div>
-
-      <!-- Featured image - using placeholder service -->
-      <div class="featured-image-container">
-        <img
-          src={frontmatter.featuredImg}
-          alt={`Image representing ${frontmatter.title}`}
-          class="featured-image"
-        />
-      </div>
-    </header>
-
-    <div class="article-content">
-      <div class="content-body">
-        <slot />
-      </div>
-    </div>
-
-    <footer class="article-footer">
-      <hr />
-      <div class="related-section">
-        <h3>You may like...</h3>
-        <RelatedPosts currentPost={frontmatter.title} />
-      </div>
-    </footer>
-  </article>
-</BaseLayout>
-
 <style>
-  .article-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    max-width: 100%;
-    color: var(--color-text);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-
-  .article-header {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-    padding: 4rem 2rem;
-    align-items: center;
-  }
-
-  .header-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .article-title {
-    font-size: 2.5rem;
-    font-weight: 500;
-    line-height: 1.2;
-    margin: 0;
-  }
-
-  .article-subtitle {
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: var(--color-text-light);
-    margin: 0.5rem 0 1rem;
-  }
-
-  .article-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 2rem;
-    font-size: 0.9rem;
-  }
-
-  .category-badge {
-    background-color: var(--category-color, #333333);
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-  }
-
-  .featured-image-container {
-    width: 100%;
-    border-radius: 0.5rem;
-    overflow: hidden;
-  }
-
-  .featured-image {
-    width: 100%;
-    aspect-ratio: 4/3;
-    object-fit: cover;
-    border-radius: 0.5rem;
-  }
-
-  .featured-image-placeholder {
-    display: none; /* Hide the old placeholder */
-  }
-
-  .article-content {
-    display: grid;
-    grid-template-columns: 1fr;
-    margin-top: 2rem;
-    padding: 0 2rem;
-  }
-
-  .section-number {
-    font-size: 0.9rem;
-    color: #888;
-    font-weight: 500;
-  }
-
-  .content-body {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--color-text);
-  }
-
-  .content-body h2 {
-    font-size: 1.8rem;
-    font-weight: 500;
-    margin: 3rem 0 1.5rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--color-border);
-  }
-
-  .content-body p {
-    margin-bottom: 1.5rem;
-  }
-
-  .article-footer {
-    margin-top: 4rem;
+  .blog-post {
+    max-width: 800px;
+    margin: 0 auto;
     padding: 2rem;
   }
 
-  .article-footer hr {
-    border: none;
-    border-top: 1px solid var(--color-border);
-    margin: 2rem 0;
+  .post-header {
+    margin-bottom: 2.5rem;
   }
 
-  .related-section h3 {
-    font-size: 1.5rem;
-    font-weight: 500;
+  .post-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-meta {
+    color: var(--color-text-light);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .post-author {
+    margin-right: 0.5rem;
+  }
+
+  .post-meta-separator {
+    color: var(--color-text-light);
+  }
+
+  .post-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .post-tag {
+    background-color: #333;
+    color: #fff;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+    font-size: 0.8rem;
+  }
+
+  .post-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .post-content {
+    line-height: 1.8;
+  }
+
+  .post-content h2,
+  .post-content h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .post-content p {
     margin-bottom: 1.5rem;
   }
 
-  .related-posts {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+  .post-content a {
+    color: #4a9ae1;
+    text-decoration: underline;
   }
 
-  /* Responsive styles */
+  .post-content blockquote {
+    border-left: 4px solid #555;
+    padding-left: 1rem;
+    color: var(--color-text-light);
+    margin: 1.5rem 0;
+  }
+
   @media (max-width: 768px) {
-    .article-header {
-      grid-template-columns: 1fr;
-    }
-
-    .article-content {
-      grid-template-columns: 1fr;
-    }
-
-    .section-numbers {
-      display: none;
+    .blog-post {
+      padding: 1rem;
     }
   }
 </style>
 
+<BaseLayout
+  pageTitle={title}
+  metaDescription={description}
+  metaKeywords={tags.join(", ")}
+  ogImage={image}
+  ogType="article"
+>
+  <article class="blog-post">
+    <header class="post-header">
+      <h1 class="post-title text-gradient">{title}</h1>
+      <div class="post-meta">
+        <span class="post-author">By {author}</span>
+        <span class="post-meta-separator">•</span>
+        <time datetime={pubDate}>{formattedDate}</time>
+        {minutesRead && (
+          <>
+            <span class="post-meta-separator">•</span>
+            <span class="post-reading-time">{minutesRead} min read</span>
+          </>
+        )}
+      </div>
+      {tags.length > 0 && (
+        <div class="post-tags">
+          {tags.map((tag: string) => (
+            <span class="post-tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </header>
+
+    {image && <img class="post-image" src={image} alt={title} onerror="this.src='https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;" />}
+
+    <div class="post-content">
+      <slot />
+    </div>
+  </article>
+
+  {/* Add JSON-LD structured data */}
+  <script type="application/ld+json" set:html={JSON.stringify(postStructuredData)} />
+</BaseLayout>

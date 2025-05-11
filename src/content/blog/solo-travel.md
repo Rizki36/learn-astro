@@ -1,13 +1,13 @@
 ---
-layout: "../../layouts/ArticleLayout.astro"
 title: "The Art of Solo Travel: Embracing Independence and Discovery (Dummy)"
+excerpt: "Traveling solo can be a transformative experience, offering unparalleled opportunities for self-discovery and personal growth. Solo trips can take you out of your comfort zone to explore the joys of independent adventures."
 pubDate: 2024-03-23
 createdAt: 2024-03-23
 minutesRead: "8"
 category: "TRAVEL"
 categoryColor: "#e0f2fe"
-excerpt: "Traveling solo can be a transformative experience, offering unparalleled opportunities for self-discovery and personal growth. Solo trips can take you out of your comfort zone to explore the joys of independent adventures."
 featuredImg: "https://placehold.co/800x600/252525/CCCCCC?text=TRAVEL"
+tags: ["travel", "lifestyle", "personal growth", "adventure"]
 ---
 
 ## INTRO

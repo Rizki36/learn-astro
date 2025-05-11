@@ -14,7 +14,8 @@
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^2.0.1",
-		"astro": "^2.1.9"
+		"astro": "^2.1.9",
+		"zod": "^3.24.4"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4"

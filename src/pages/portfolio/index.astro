@@ -1,6 +1,6 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-
+import { getCollection } from 'astro:content';
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 // SEO metadata for portfolio page
 const pageTitle = "Portfolio";
@@ -9,33 +9,11 @@ const metaDescription =
 const metaKeywords = 
   "portfolio, web development projects, full stack developer, react projects, nextjs projects, typescript, javascript, case studies";
 
-// Portfolio projects data
-const projects = [
-  {
-    title: "Project One",
-    description: "A full-stack web application with React frontend and Node.js backend.",
-    image: "/images/portfolio/project1.jpg",
-    tags: ["React", "Node.js", "MongoDB"],
-    link: "/portfolio/project-one",
-    github: "https://github.com/username/project-one"
-  },
-  {
-    title: "Project Two",
-    description: "E-commerce platform built with NextJS and integrated payment processing.",
-    image: "/images/portfolio/project2.jpg",
-    tags: ["NextJS", "Stripe", "TypeScript"],
-    link: "/portfolio/project-two",
-    github: "https://github.com/username/project-two"
-  },
-  {
-    title: "Project Three",
-    description: "Real-time dashboard with data visualization built using React and D3.js.",
-    image: "/images/portfolio/project3.jpg",
-    tags: ["React", "D3.js", "Firebase"],
-    link: "/portfolio/project-three",
-    github: "https://github.com/username/project-three"
-  }
-];
+// Get all portfolio projects from the content collection
+const allProjects = await getCollection('portfolio');
+
+// Sort projects by order (or other criteria)
+const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <style>
@@ -137,6 +115,18 @@ const projects = [
   .github-link:hover {
     background-color: #ddd;
   }
+
+  .featured-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ffcc00;
+    color: #333;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
 </style>
 
 <BaseLayout
@@ -156,23 +146,31 @@ const projects = [
     <div class="projects-grid">
       {projects.map((project) => (
         <div class="project-card">
-          <img 
-            src={project.image || 'https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'} 
-            alt={project.title} 
-            class="project-image"
-            onerror="this.src='https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
-          />
+          <div style="position: relative;">
+            <img 
+              src={project.data.image} 
+              alt={project.data.title} 
+              class="project-image"
+              onerror="this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
+            />
+            {project.data.featured && <span class="featured-badge">Featured</span>}
+          </div>
           <div class="project-content">
-            <h2 class="project-title">{project.title}</h2>
-            <p class="project-description">{project.description}</p>
+            <h2 class="project-title">{project.data.title}</h2>
+            <p class="project-description">{project.data.description}</p>
             <div class="project-tags">
-              {project.tags.map((tag) => (
-                <span class="project-tag">{tag}</span>
+              {project.data.technologies.map((tech) => (
+                <span class="project-tag">{tech}</span>
               ))}
             </div>
             <div class="project-links">
-              <a href={project.link} class="project-link">View Project</a>
-              <a href={project.github} class="project-link github-link">GitHub</a>
+              <a href={`/portfolio/${project.slug}`} class="project-link">View Details</a>
+              {project.data.github && 
+                <a href={project.data.github} class="project-link github-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+              }
+              {project.data.liveUrl && 
+                <a href={project.data.liveUrl} class="project-link" target="_blank" rel="noopener noreferrer">Live Demo</a>
+              }
             </div>
           </div>
         </div>

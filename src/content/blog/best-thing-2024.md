@@ -1,12 +1,11 @@
 ---
-layout: "../../layouts/ArticleLayout.astro"
 title: "The best thing that happened in 2024 (Dummy)"
+excerpt: "As the year comes to an end we try I try to come to terms with how much I have achieved. Here are three tips I can tell you..."
 pubDate: 2024-12-27
 createdAt: 2024-12-27
 minutesRead: "6"
 category: "LIFESTYLE"
 categoryColor: "#d1fae5"
-excerpt: "As the year comes to an end we try I try to come to terms with how much I have achieved. Here are three tips I can tell you..."
 featuredImg: "https://placehold.co/800x600/252525/CCCCCC?text=LIFESTYLE"
 ---
 
