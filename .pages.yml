@@ -28,7 +28,7 @@ content:
         default: true
       - name: technologies
         label: Technologies
-        type: tags
+        type: select
         options:
           creatable: true
           multiple: true
