@@ -1,198 +1,53 @@
-# PagesCMS Configuration (Latest Version)
-title: Portfolio & Blog CMS
-
-backend:
-  name: github
-  repo: username/learn-astro
-  branch: main
+content:
+  - name: portfolio
+    label: Portfolio
+    path: src/content/portfolio
+    filename: '{fields.title}.md'
+    type: collection
+    view:
+      fields: []
+    fields:
+      - name: title
+        label: Title
+        type: text
+      - name: description
+        label: Description
+        type: rich-text
+      - name: publishDate
+        label: Publish Date
+        type: date
+      - name: updatedDate
+        label: Updated Date
+        type: date
+      - name: image
+        label: Image
+        type: image
+      - name: featured
+        label: Featured
+        type: boolean
+        default: true
+      - name: technologies
+        label: Technologies
+        type: tags
+        options:
+          creatable: true
+          multiple: true
+          values: [React, Vue.js, Angular, Node.js, Python, JavaScript, TypeScript, CSS, HTML]
+      - name: github
+        label: GitHub URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: liveUrl
+        label: Live URL
+        type: string
+        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+      - name: order
+        label: Order
+        type: number
+        options:
+          min: 0
 
 media:
-  folder: "public/images"
-
-collections:
-  portfolio:
-    name: "Portfolio Projects"
-    folder: "src/content/portfolio"
-    extension: "mdx"
-    format: "frontmatter"
-    create: true
-    slug: "{{slug}}"
-    view_filters:
-      - field: "featured"
-        value: true
-        label: "Featured Projects"
-    fields:
-      - name: "title"
-        label: "Project Title"
-        type: "string"
-        required: true
-      - name: "description"
-        label: "Project Description"
-        type: "text"
-        required: true
-      - name: "publishDate"
-        label: "Publish Date"
-        type: "date"
-        required: true
-      - name: "updatedDate"
-        label: "Last Updated"
-        type: "date"
-        required: false
-      - name: "image"
-        label: "Cover Image"
-        type: "image"
-        required: true
-      - name: "featured"
-        label: "Featured Project"
-        type: "boolean"
-        default: false
-      - name: "technologies"
-        label: "Technologies Used"
-        type: "list"
-        required: true
-      - name: "github"
-        label: "GitHub URL"
-        type: "string"
-        required: false
-      - name: "liveUrl"
-        label: "Live Demo URL"
-        type: "string"
-        required: false
-      - name: "order"
-        label: "Display Order"
-        type: "number"
-        default: 0
-      - name: "body"
-        label: "Project Content"
-        type: "markdown"
-        required: true
-
-  article:
-    name: "Technical Articles"
-    folder: "src/content/article"
-    extension: "md"
-    format: "frontmatter"
-    create: true
-    slug: "{{slug}}"
-    view_filters:
-      - field: "draft"
-        value: false
-        label: "Published"
-    fields:
-      - name: "title"
-        label: "Article Title"
-        type: "string"
-        required: true
-      - name: "description"
-        label: "Description"
-        type: "text"
-        required: true
-      - name: "pubDate"
-        label: "Publication Date"
-        type: "date"
-        required: true
-      - name: "updatedDate"
-        label: "Last Updated"
-        type: "date"
-        required: false
-      - name: "author"
-        label: "Author"
-        type: "string"
-        default: "Fitra"
-      - name: "authorImage"
-        label: "Author Image"
-        type: "image"
-        required: false
-      - name: "featuredImage"
-        label: "Featured Image"
-        type: "image"
-        required: false
-      - name: "category"
-        label: "Category"
-        type: "string"
-        required: false
-      - name: "tags"
-        label: "Tags"
-        type: "list"
-        required: false
-        default: []
-      - name: "draft"
-        label: "Draft"
-        type: "boolean"
-        default: false
-      - name: "minutesRead"
-        label: "Reading Time (minutes)"
-        type: "number"
-        required: false
-      - name: "body"
-        label: "Article Content"
-        type: "markdown"
-        required: true
-
-  blog:
-    name: "Blog Posts"
-    folder: "src/content/blog"
-    extension: "md"
-    format: "frontmatter"
-    create: true
-    slug: "{{slug}}"
-    view_filters:
-      - field: "draft"
-        value: false
-        label: "Published"
-      - field: "category"
-        label: "Filter by Category"
-    fields:
-      - name: "title"
-        label: "Post Title"
-        type: "string"
-        required: true
-      - name: "excerpt"
-        label: "Excerpt"
-        type: "text"
-        required: true
-      - name: "pubDate"
-        label: "Publication Date"
-        type: "date"
-        required: true
-      - name: "createdAt"
-        label: "Created Date"
-        type: "date"
-        required: false
-      - name: "updatedDate"
-        label: "Last Updated"
-        type: "date"
-        required: false
-      - name: "author"
-        label: "Author"
-        type: "string"
-        default: "Fitra"
-      - name: "category"
-        label: "Category"
-        type: "string"
-        required: false
-      - name: "categoryColor"
-        label: "Category Color"
-        type: "color"
-        required: false
-      - name: "featuredImg"
-        label: "Featured Image"
-        type: "image"
-        required: false
-      - name: "tags"
-        label: "Tags"
-        type: "list"
-        required: false
-        default: []
-      - name: "draft"
-        label: "Draft"
-        type: "boolean"
-        default: false
-      - name: "minutesRead"
-        label: "Reading Time"
-        type: "string"
-        required: false
-      - name: "body"
-        label: "Post Content"
-        type: "markdown"
-        required: true
+  input: public/media
+  output: /media
+    
