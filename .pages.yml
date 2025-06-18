@@ -5,14 +5,14 @@ content:
     filename: '{fields.title}.md'
     type: collection
     view:
-      fields: []
+      fields: [ title, description, publishDate ]
     fields:
       - name: title
         label: Title
         type: text
       - name: description
         label: Description
-        type: rich-text
+        type: text
       - name: publishDate
         label: Publish Date
         type: date
@@ -46,6 +46,113 @@ content:
         type: number
         options:
           min: 0
+      - name: body
+        label: Body
+        type: rich-text
+
+  - name: article
+    label: Articles
+    path: src/content/article
+    filename: '{fields.title}.md'
+    type: collection
+    view:
+      fields: []
+    fields:
+      - name: title
+        label: Title
+        type: text
+      - name: description
+        label: Description
+        type: text
+      - name: pubDate
+        label: Publish Date
+        type: date
+      - name: updatedDate
+        label: Updated Date
+        type: date
+      - name: author
+        label: Author
+        type: text
+      - name: featuredImage
+        label: Image
+        type: image
+      - name: category
+        label: Category
+        type: text
+      - name: tags
+        label: Tags
+        type: select
+        options:
+          creatable: true
+          multiple: true
+          values: []
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: minutesRead
+        label: Minutes Read
+        type: number
+        options:
+          min: 0
+      - name: body
+        label: Body
+        type: rich-text
+
+  - name: blog
+    label: Blog
+    path: src/content/blog
+    filename: '{fields.title}.md'
+    type: collection
+    view:
+      fields: []
+    fields:
+      - name: title
+        label: Title
+        type: text
+      - name: excerpt
+        label: Excerpt
+        type: text
+      - name: pubDate
+        label: Publish Date
+        type: date
+      - name: createdAt
+        label: Created At
+        type: date
+      - name: updatedAt
+        label: Updated At
+        type: date
+      - name: author
+        label: Author
+        type: text
+      - name: category
+        label: Category
+        type: text
+      - name: categoryColor
+        label: Category Color
+        type: text
+      - name: featuredImg
+        label: Featured Image
+        type: image
+      - name: tags
+        label: Tags
+        type: select
+        options:
+          creatable: true
+          multiple: true
+          values: []
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - name: minutesRead
+        label: Minutes Read
+        type: number
+        options:
+          min: 0
+      - name: body
+        label: Body
+        type: rich-text
 
 media:
   input: public/media
