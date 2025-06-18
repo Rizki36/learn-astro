@@ -1,0 +1,194 @@
+# Set the title for your content admin panel
+title: Portfolio & Blog CMS
+
+# Global settings for all collections
+settings:
+  media_folder: "public/images"
+  public_folder: "/images"
+
+# Define collections based on your content schema
+collections:
+  portfolio:
+    name: "Portfolio Projects"
+    label_field: "title"
+    folder: "src/content/portfolio"
+    create: true
+    format: "mdx"
+    slug: "{{slug}}"
+    sortable_fields: ["publishDate", "order", "title"]
+    fields:
+      - name: title
+        label: "Project Title"
+        type: string
+        required: true
+      - name: description
+        label: "Project Description"
+        type: string
+        required: true
+        widget: "textarea"
+      - name: publishDate
+        label: "Publish Date"
+        type: date
+        required: true
+      - name: updatedDate
+        label: "Last Updated"
+        type: date
+        required: false
+      - name: image
+        label: "Cover Image"
+        type: string
+        required: true
+        widget: "image"
+      - name: featured
+        label: "Featured Project"
+        type: boolean
+        default: false
+      - name: technologies
+        label: "Technologies Used"
+        type: list
+        required: true
+        allow_add: true
+      - name: github
+        label: "GitHub URL"
+        type: string
+        required: false
+      - name: liveUrl
+        label: "Live Demo URL"
+        type: string
+        required: false
+      - name: order
+        label: "Display Order"
+        type: number
+        default: 0
+      - name: body
+        label: "Project Content"
+        type: markdown
+        required: true
+
+  article:
+    name: "Technical Articles"
+    label_field: "title"
+    folder: "src/content/article"
+    create: true
+    format: "md"
+    slug: "{{slug}}"
+    sortable_fields: ["pubDate", "title"]
+    fields:
+      - name: title
+        label: "Article Title"
+        type: string
+        required: true
+      - name: description
+        label: "Description"
+        type: string
+        required: true
+        widget: "textarea"
+      - name: pubDate
+        label: "Publication Date"
+        type: date
+        required: true
+      - name: updatedDate
+        label: "Last Updated"
+        type: date
+        required: false
+      - name: author
+        label: "Author"
+        type: string
+        default: "Fitra"
+      - name: authorImage
+        label: "Author Image"
+        type: string
+        required: false
+        widget: "image"
+      - name: featuredImage
+        label: "Featured Image"
+        type: string
+        required: false
+        widget: "image"
+      - name: category
+        label: "Category"
+        type: string
+        required: false
+      - name: tags
+        label: "Tags"
+        type: list
+        required: false
+        default: []
+      - name: draft
+        label: "Draft"
+        type: boolean
+        default: false
+      - name: minutesRead
+        label: "Reading Time (minutes)"
+        type: number
+        required: false
+      - name: body
+        label: "Article Content"
+        type: markdown
+        required: true
+
+  blog:
+    name: "Blog Posts"
+    label_field: "title"
+    folder: "src/content/blog"
+    create: true
+    format: "md"
+    slug: "{{slug}}"
+    sortable_fields: ["pubDate", "title"]
+    fields:
+      - name: title
+        label: "Post Title"
+        type: string
+        required: true
+      - name: excerpt
+        label: "Excerpt"
+        type: string
+        required: true
+        widget: "textarea"
+      - name: pubDate
+        label: "Publication Date"
+        type: date
+        required: true
+      - name: createdAt
+        label: "Created Date"
+        type: date
+        required: false
+      - name: updatedDate
+        label: "Last Updated"
+        type: date
+        required: false
+      - name: author
+        label: "Author"
+        type: string
+        default: "Fitra"
+      - name: category
+        label: "Category"
+        type: string
+        required: false
+      - name: categoryColor
+        label: "Category Color"
+        type: string
+        required: false
+        widget: "color"
+      - name: featuredImg
+        label: "Featured Image"
+        type: string
+        required: false
+        widget: "image"
+      - name: tags
+        label: "Tags"
+        type: list
+        required: false
+        default: []
+      - name: draft
+        label: "Draft"
+        type: boolean
+        default: false
+      - name: minutesRead
+        label: "Reading Time"
+        type: string
+        required: false
+      - name: body
+        label: "Post Content"
+        type: markdown
+        required: true
