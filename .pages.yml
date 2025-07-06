@@ -32,7 +32,7 @@ content:
         options:
           creatable: true
           multiple: true
-          values: [React, Vue.js, Angular, Node.js, Python, JavaScript, TypeScript, CSS, HTML]
+          values: [React, Vue.js, Angular, Node.js, Python, JavaScript, TypeScript, CSS, HTML, PHP, Laralvel, Codeigniter 3, Codeigniter 4, JQuery]
       - name: github
         label: GitHub URL
         type: string
@@ -64,6 +64,16 @@ content:
       - name: description
         label: Description
         type: text
+      - name: "startDate"
+        label: "Project Start Date"
+        type: "date"
+        required: true
+        description: "When the project was started"
+      - name: "endDate"
+        label: "Project End Date"
+        type: "date"
+        required: false
+        description: "When the project was completed (leave empty for ongoing projects)"
       - name: pubDate
         label: Publish Date
         type: date
