@@ -10,47 +10,58 @@ content:
       - name: title
         label: Title
         type: text
+        required: true
+        description: "The title of the project, e.g., 'My Awesome Project'"
       - name: description
         label: Description
         type: text
+        required: true
+        description: "A brief description of the project, e.g., 'This project is about ...'"
       - name: "startDate"
         label: "Project Start Date"
         type: "date"
         required: true
-        description: "When the project was started"
+        description: "When the project was started, always fill day with 1st of the month"
       - name: "endDate"
         label: "Project End Date"
         type: "date"
         required: false
-        description: "When the project was completed (leave empty for ongoing projects)"
+        description: "When the project was completed (leave empty for ongoing projects), always fill day with end of the month"
       - name: publishDate
         label: Publish Date
         type: date
+        description: "The date when the project was published, e.g., '2023-10-01'"
       - name: updatedDate
         label: Updated Date
         type: date
+        description: "The date when the project was last updated, e.g., '2023-10-15'"
       - name: image
         label: Image
         type: image
+        description: "An image representing the project, e.g., a screenshot or logo"
       - name: featured
         label: Featured
         type: boolean
         default: true
+        description: "Whether the project is featured on the portfolio page"
       - name: technologies
         label: Technologies
         type: select
         options:
           creatable: true
           multiple: true
-          values: [React, Vue.js, Angular, Node.js, Python, JavaScript, TypeScript, CSS, HTML, PHP, Laralvel, Codeigniter 3, Codeigniter 4, JQuery]
+          values: [React, Vue.js, Angular, Node.js, Python, JavaScript, TypeScript, CSS, HTML, PHP, Laravel, Codeigniter 3, Codeigniter 4, JQuery]
+        description: "Technologies used in the project, e.g., 'React, Node.js, CSS'"
       - name: github
         label: GitHub URL
         type: string
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+        description: "The URL to the project's GitHub repository, e.g., '
       - name: liveUrl
         label: Live URL
         type: string
         pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+        description: "The live URL of the project, e.g., 'https://my-awesome-project.com'"
       - name: order
         label: Order
         type: number
@@ -59,6 +70,7 @@ content:
       - name: body
         label: Body
         type: rich-text
+        description: "The main content of the project, can include images, code snippets, and other rich text elements"
 
   - name: article
     label: Articles
