@@ -15,7 +15,7 @@ content:
       - name: description
         label: Description
         type: text
-        required: true
+        # required: true
         description: "A brief description of the project, e.g., 'This project is about ...'"
       - name: "startDate"
         label: "Project Start Date"
@@ -55,12 +55,12 @@ content:
       - name: github
         label: GitHub URL
         type: string
-        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+        # pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
         description: "The URL to the project's GitHub repository, e.g., '
       - name: liveUrl
         label: Live URL
         type: string
-        pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
+        # pattern: ^(https?:\/\/)?(www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\/[^\s]*)?$
         description: "The live URL of the project, e.g., 'https://my-awesome-project.com'"
       - name: order
         label: Order
