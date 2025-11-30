@@ -1,6 +1,7 @@
 ---
 import me from "../images/me.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { personSchema } from "../utils/schema.ts";
 
 // SEO metadata for about page
 const pageTitle = "About Me";
@@ -9,6 +10,13 @@ const metaDescription =
 const metaKeywords =
 	"Fitra, about me, developer skills, full stack developer, react, nextjs, typescript, laravel, portfolio";
 const ogImage = me;
+
+// JSON-LD structured data for about page
+const aboutPageSchema = {
+	"@context": "https://schema.org",
+	"@type": "AboutPage",
+	mainEntity: personSchema
+};
 
 // Skills
 import javascript from "../images/skills/javascript.svg";
@@ -179,6 +187,7 @@ const links = [
   metaKeywords={metaKeywords}
   ogImage={ogImage}
   ogType="profile"
+  schemaData={aboutPageSchema}
 >
   <div class="about">
     <div class="about__image_wrapper">

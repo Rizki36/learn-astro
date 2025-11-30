@@ -92,21 +92,35 @@ const combinedPosts = [...normalizedArticlePosts, ...normalizedLifestylePosts];
 const posts = combinedPosts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 // Structured data for blog listing (JSON-LD)
-const postStructuredData = {
+const blogCollectionSchema = {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    headline: "DevFitra's Blog",
+    "@type": "CollectionPage",
+    name: "Blog & Articles - DevFitra",
     description: metaDescription,
+    url: "https://devfitra.com/posts",
     author: {
         "@type": "Person",
+        "@id": "https://devfitra.com/#person",
         name: "Fitra",
     },
-    blogPost: posts.map((post) => ({
-        "@type": "BlogPosting",
-        headline: post.title,
-        description: post.description,
-        datePublished: post.date.toISOString(),
-    })),
+    mainEntity: {
+        "@type": "Blog",
+        name: "DevFitra's Blog & Articles",
+        description: metaDescription,
+        blogPost: posts.map((post) => ({
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.description,
+            datePublished: post.date.toISOString(),
+            url: `https://devfitra.com${post.url}`,
+            author: {
+                "@type": "Person",
+                name: post.author
+            },
+            keywords: post.tags.join(", "),
+            articleSection: post.category || "General"
+        }))
+    }
 };
 ---
 
@@ -226,6 +240,7 @@ const postStructuredData = {
   pageTitle={pageTitle}
   metaDescription={metaDescription}
   metaKeywords={metaKeywords}
+  schemaData={blogCollectionSchema}
 >
   <div class="blog__container">
     <header class="blog__header">
@@ -311,7 +326,4 @@ const postStructuredData = {
       )}
     </div>
   </div>
-
-  {/* Add JSON-LD structured data */}
-  <script type="application/ld+json" set:html={JSON.stringify(postStructuredData)} />
 </BaseLayout>

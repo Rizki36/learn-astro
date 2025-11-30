@@ -14,6 +14,39 @@ const allProjects = await getCollection('portfolio');
 
 // Sort projects by order (or other criteria)
 const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+// JSON-LD structured data for portfolio collection
+const portfolioSchema = {
+	"@context": "https://schema.org",
+	"@type": "CollectionPage",
+	name: "Portfolio - DevFitra",
+	description: metaDescription,
+	url: "https://devfitra.com/portfolio",
+	author: {
+		"@type": "Person",
+		"@id": "https://devfitra.com/#person",
+		name: "Fitra"
+	},
+	mainEntity: {
+		"@type": "ItemList",
+		itemListElement: projects.map((project, index) => ({
+			"@type": "ListItem",
+			position: index + 1,
+			item: {
+				"@type": "CreativeWork",
+				name: project.data.title,
+				description: project.data.description || project.data.title,
+				image: project.data.image || "https://devfitra.com/images/og-image.jpg",
+				url: `https://devfitra.com/portfolio/${project.slug}`,
+				keywords: project.data.technologies.join(", "),
+				author: {
+					"@type": "Person",
+					name: "Fitra"
+				}
+			}
+		}))
+	}
+};
 ---
 
 <style>
@@ -220,6 +253,7 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
   pageTitle={pageTitle}
   metaDescription={metaDescription}
   metaKeywords={metaKeywords}
+  schemaData={portfolioSchema}
 >
   <a href="#main-content" class="skip-link">Skip to main content</a>
   

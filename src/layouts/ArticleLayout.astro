@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
+import { createTechArticleSchema } from "../utils/schema.ts";
 
 const { frontmatter } = Astro.props;
 const {
@@ -19,46 +20,17 @@ const formattedDate = new Date(pubDate).toLocaleDateString("en-US", {
 	day: "numeric",
 });
 
-// Construct structured data for the blog post (JSON-LD)
-const postStructuredData: {
-	"@context": string;
-	"@type": string;
-	headline: string;
-	description: string;
-	datePublished: string;
-	author: {
-		"@type": string;
-		name: string;
-	};
-	publisher: {
-		"@type": string;
-		name: string;
-		url: string;
-	};
-	keywords: string;
-	image?: string;
-} = {
-	"@context": "https://schema.org",
-	"@type": "BlogPosting",
-	headline: title,
-	description: description,
-	datePublished: pubDate,
-	author: {
-		"@type": "Person",
-		name: author,
-	},
-	publisher: {
-		"@type": "Person",
-		name: "Fitra",
-		url: "https://yourwebsite.com",
-	},
-	keywords: tags.join(", "),
-};
-
-// If there's a blog post image, add it to the structured data
-if (image) {
-	postStructuredData.image = new URL(image, Astro.url).toString();
-}
+// Construct structured data for the article (JSON-LD)
+const articleSchema = createTechArticleSchema({
+	title,
+	description,
+	pubDate,
+	url: Astro.url.pathname,
+	image,
+	tags,
+	author,
+	minutesRead
+})
 ---
 
 <style>
@@ -156,6 +128,7 @@ if (image) {
   metaKeywords={tags.join(", ")}
   ogImage={image}
   ogType="article"
+  schemaData={articleSchema}
 >
   <article class="blog-post">
     <header class="post-header">
@@ -186,7 +159,4 @@ if (image) {
       <slot />
     </div>
   </article>
-
-  {/* Add JSON-LD structured data */}
-  <script type="application/ld+json" set:html={JSON.stringify(postStructuredData)} />
 </BaseLayout>

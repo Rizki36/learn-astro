@@ -1,11 +1,31 @@
 ---
 import LatestPosts from "../components/LatestPosts.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { createBlogPostingSchema } from "../utils/schema.ts";
 
 const { frontmatter } = Astro.props;
+
+// JSON-LD structured data for blog post
+const blogPostSchema = createBlogPostingSchema({
+	title: frontmatter.title,
+	description: frontmatter.excerpt,
+	pubDate: frontmatter.pubDate,
+	url: Astro.url.pathname,
+	image: frontmatter.featuredImg,
+	tags: frontmatter.tags,
+	category: frontmatter.category,
+	author: "Fitra"
+});
 ---
 
-<BaseLayout pageTitle={frontmatter.title} withMaxWidth={false}>
+<BaseLayout 
+	pageTitle={frontmatter.title} 
+	withMaxWidth={false}
+	metaDescription={frontmatter.excerpt}
+	ogType="article"
+	ogImage={frontmatter.featuredImg}
+	schemaData={blogPostSchema}
+>
   <article class="article-container">
     <header class="article-header">
       <div class="header-content">
