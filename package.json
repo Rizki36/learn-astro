@@ -14,11 +14,12 @@
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^2.0.1",
-		"astro": "^2.1.9",
+		"astro": "^5.16.3",
 		"zod": "^3.24.4"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4"
+		"@biomejs/biome": "1.9.4",
+		"typescript": "^5.9.3"
 	},
 	"engines": {
 		"node": ">=20.0.0"

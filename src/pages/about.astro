@@ -182,7 +182,7 @@ const links = [
 >
   <div class="about">
     <div class="about__image_wrapper">
-      <img src={me} alt="Me" />
+      <img src={me.src} alt="Me" />
     </div>
 
     <p class="about__description">
@@ -198,7 +198,7 @@ const links = [
         {
           skills.map((skill) => (
             <div class="about__skills_item">
-              <img src={skill.logo} alt={skill.label} title={skill.label} />
+              <img src={skill.logo.src} alt={skill.label} title={skill.label} />
             </div>
           ))
         }
@@ -218,7 +218,7 @@ const links = [
             target="_blank"
             rel="noreferrer"
           >
-            <img src={link.logo} alt={link.label} title={link.label} />
+            <img src={link.logo.src} alt={link.label} title={link.label} />
           </a>
         ))
       }
