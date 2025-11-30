@@ -17,6 +17,21 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <style>
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px;
+    text-decoration: none;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
   .portfolio-header {
     text-align: center;
     margin: 2rem 0 3rem;
@@ -29,9 +44,10 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
 
   .portfolio-description {
     font-size: 1.2rem;
-    color: #4c4c4c;
+    color: var(--color-text, #e0e0e0);
     max-width: 800px;
     margin: 0 auto;
+    line-height: 1.6;
   }
 
   .projects-grid {
@@ -39,37 +55,70 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+    list-style: none;
+    padding: 0;
   }
 
   .project-card {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    background-color: #1e1e1e;
+    border: 1px solid var(--color-border, #333333);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
   }
 
-  .project-card:hover {
+  .project-card:hover,
+  .project-card:focus-within {
     transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    border-color: #555;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-card {
+      transition: none;
+    }
+    
+    .project-card:hover,
+    .project-card:focus-within {
+      transform: none;
+    }
+  }
+
+  .project-image-wrapper {
+    position: relative;
+    background-color: #2a2a2a;
   }
 
   .project-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    display: block;
   }
 
   .project-content {
     padding: 1.5rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   .project-title {
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
+    line-height: 1.3;
+    color: var(--color-text, #e0e0e0);
   }
 
   .project-description {
-    color: #4c4c4c;
+    color: var(--color-text-light, #b0b0b0);
     margin-bottom: 1rem;
+    line-height: 1.6;
+    flex-grow: 1;
   }
 
   .project-tags {
@@ -77,55 +126,80 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-bottom: 1rem;
+    list-style: none;
+    padding: 0;
   }
 
   .project-tag {
-    background-color: #f0f0f0;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
     font-size: 0.8rem;
-    color: #666;
+    color: #e0e0e0;
   }
 
   .project-links {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
   }
 
   .project-link {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #3a3a3a;
-    color: white;
+    background-color: #2a6de9;
+    color: #ffffff;
     text-decoration: none;
     border-radius: 4px;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, outline 0.2s ease;
+    font-weight: 500;
   }
 
   .project-link:hover {
-    background-color: #555;
+    background-color: #1e57c7;
+  }
+
+  .project-link:focus {
+    outline: 3px solid #60a5fa;
+    outline-offset: 2px;
   }
 
   .github-link {
-    background-color: #f0f0f0;
-    color: #333;
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+    color: #e0e0e0;
   }
 
   .github-link:hover {
-    background-color: #ddd;
+    background-color: #3a3a3a;
+    border-color: #666;
   }
 
   .featured-badge {
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: #ffcc00;
-    color: #333;
+    background-color: #fbbf24;
+    color: #000;
     padding: 0.3rem 0.6rem;
     border-radius: 4px;
     font-size: 0.8rem;
     font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 </style>
 
@@ -134,6 +208,8 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
   metaDescription={metaDescription}
   metaKeywords={metaKeywords}
 >
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+  
   <div class="portfolio-container">
     <header class="portfolio-header">
       <h1 class="portfolio-title text-gradient">My Portfolio</h1>
@@ -143,38 +219,69 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
       </p>
     </header>
 
-    <div class="projects-grid">
-      {projects.map((project) => (
-        <div class="project-card">
-          <div style="position: relative;">
-            <img 
-              src={project.data.image || "this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO IMAGE'"} 
-              alt={project.data.title} 
-              class="project-image"
-              onerror="this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
-            />
-            {project.data.featured && <span class="featured-badge">Featured</span>}
-          </div>
-          <div class="project-content">
-            <h2 class="project-title">{project.data.title}</h2>
-            <p class="project-description">{project.data.description}</p>
-            <div class="project-tags">
-              {project.data.technologies.map((tech) => (
-                <span class="project-tag">{tech}</span>
-              ))}
-            </div>
-            <div class="project-links">
-              <a href={`/portfolio/${project.slug}`} class="project-link">View Details</a>
-              {project.data.github && 
-                <a href={project.data.github} class="project-link github-link" target="_blank" rel="noopener noreferrer">GitHub</a>
-              }
-              {project.data.liveUrl && 
-                <a href={project.data.liveUrl} class="project-link" target="_blank" rel="noopener noreferrer">Live Demo</a>
-              }
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
+    <main id="main-content">
+      <ul class="projects-grid" role="list" aria-label="Portfolio projects">
+        {projects.map((project, index) => (
+          <li>
+            <article class="project-card" aria-labelledby={`project-title-${index}`}>
+              <div class="project-image-wrapper">
+                <img 
+                  src={project.data.image || "https://placehold.co/300x200/252525/CCCCCC?text=NO%20IMAGE"} 
+                  alt={project.data.image ? `Screenshot of ${project.data.title} project` : `No image available for ${project.data.title}`}
+                  class="project-image"
+                  loading="lazy"
+                  onerror="this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO%20IMAGE'; this.onerror=null;"
+                />
+                {project.data.featured && (
+                  <span class="featured-badge" aria-label="Featured project">Featured</span>
+                )}
+              </div>
+              <div class="project-content">
+                <h2 class="project-title" id={`project-title-${index}`}>{project.data.title}</h2>
+                <p class="project-description">{project.data.description}</p>
+                <ul class="project-tags" aria-label="Technologies used">
+                  {project.data.technologies.map((tech) => (
+                    <li class="project-tag">{tech}</li>
+                  ))}
+                </ul>
+                <nav class="project-links" aria-label={`Links for ${project.data.title}`}>
+                  <a 
+                    href={`/portfolio/${project.slug}`} 
+                    class="project-link"
+                    aria-label={`View details about ${project.data.title}`}
+                  >
+                    View Details
+                  </a>
+                  {project.data.github && (
+                    <a 
+                      href={project.data.github} 
+                      class="project-link github-link" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`View ${project.data.title} source code on GitHub (opens in new tab)`}
+                    >
+                      GitHub
+                      <span class="sr-only"> (opens in new tab)</span>
+                    </a>
+                  )}
+                  {project.data.liveUrl && (
+                    <a 
+                      href={project.data.liveUrl} 
+                      class="project-link" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`View live demo of ${project.data.title} (opens in new tab)`}
+                    >
+                      Live Demo
+                      <span class="sr-only"> (opens in new tab)</span>
+                    </a>
+                  )}
+                </nav>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </main>
   </div>
 </BaseLayout>
