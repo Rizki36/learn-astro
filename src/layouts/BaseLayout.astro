@@ -78,9 +78,13 @@ const baseSchemaData = {
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title="DevFitra Blog & Articles RSS Feed" href="/rss.xml" />
     
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(schemaData || baseSchemaData)} />
     
+
     <ClientRouter />
   </head>
   <body>
