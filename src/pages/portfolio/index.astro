@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { getCollection } from 'astro:content';
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { AUTHOR_NAME, SITE_URL } from '../../utils/schema';
@@ -273,12 +274,13 @@ const portfolioSchema = {
           <li>
             <article class="project-card" aria-labelledby={`project-title-${index}`}>
               <div class="project-image-wrapper">
-                <img 
+                <Image 
                   src={project.data.image || "https://placehold.co/300x200/252525/CCCCCC?text=NO%20IMAGE"} 
                   alt={project.data.image ? `Screenshot of ${project.data.title} project` : `No image available for ${project.data.title}`}
                   class="project-image"
                   loading="lazy"
-                  onerror="this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO%20IMAGE'; this.onerror=null;"
+                  width={300}
+                  height={200}
                 />
                 {project.data.featured && (
                   <span class="featured-badge" aria-label="Featured project">Featured</span>

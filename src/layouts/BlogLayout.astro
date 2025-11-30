@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import LatestPosts from "../components/LatestPosts.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { createBlogPostingSchema } from "../utils/schema.ts";
@@ -60,10 +61,12 @@ const blogPostSchema = createBlogPostingSchema({
 
       <!-- Featured image - using placeholder service -->
       <div class="featured-image-container">
-        <img
+        <Image
           src={frontmatter.featuredImg}
           alt={`Image representing ${frontmatter.title}`}
           class="featured-image"
+          width={800}
+          height={400}
         />
       </div>
     </header>

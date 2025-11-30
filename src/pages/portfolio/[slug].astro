@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { getCollection } from 'astro:content';
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { createProjectSchema } from "../../utils/schema.ts";
@@ -167,11 +168,12 @@ const projectSchema = createProjectSchema({
         <div class="project-meta">
           <span class="project-date">Completed on {formattedDate}</span>
         </div>
-        <img 
-          src={entry.data.image} 
+        <Image 
+          src={entry.data.image || `https://placehold.co/800x400/252525/CCCCCC?text=${encodeURIComponent('NO IMAGE')}`} 
           alt={entry.data.title} 
           class="project-image"
-          onerror={`this.src='https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;`}
+          width={800}
+          height={400}
         />
         <div class="project-tags">
           {entry.data.technologies.map(tech => (

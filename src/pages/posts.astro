@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from 'astro:content';
 import { AUTHOR_NAME, SITE_URL } from "../utils/schema";
@@ -252,11 +253,12 @@ const blogCollectionSchema = {
     {posts.length > 0 && posts[0] && (
       <article class="blog__post-featured">
         {posts[0].image && (
-          <img 
+          <Image 
             class="blog__post-featured-image" 
             src={posts[0].image} 
             alt={posts[0].title}
-            onerror="this.src='https://placehold.co/800x400/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
+            width={800}
+            height={200}
           />
         )}
         <div class="blog__post-featured-content">

@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import BaseLayout from "./BaseLayout.astro";
 import { createTechArticleSchema } from "../utils/schema.ts";
 
@@ -153,7 +154,7 @@ const articleSchema = createTechArticleSchema({
       )}
     </header>
 
-    {image && <img class="post-image" src={image} alt={title} onerror="this.src='https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;" />}
+    {image && <Image class="post-image" src={image} alt={title} width={800} height={400} />}
 
     <div class="post-content">
       <slot />

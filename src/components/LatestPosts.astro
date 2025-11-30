@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { getCollection } from 'astro:content';
 
 // Get the current post title or slug
@@ -38,11 +39,12 @@ const latestPosts = allPostEntries
       </div>
       <h4 class="post-title">{post.title}</h4>
       <div class="post-image-container">
-        <img 
+        <Image 
           src={post.featuredImg || `https://placehold.co/300x300/252525/CCCCCC?text=${encodeURIComponent(post.category)}`}
           alt={`Image for ${post.title}`}
           class="post-image"
-          onerror="this.src=`https://placehold.co/300x300/252525/CCCCCC?text=${encodeURIComponent('NO IMAGE')}`; this.onerror=null;"
+          width={300}
+          height={300}
         />
       </div>
     </a>
