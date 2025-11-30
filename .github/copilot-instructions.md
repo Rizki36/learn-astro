@@ -1,7 +1,7 @@
 # Copilot Instructions for learn-astro
 
 ## Project Overview
-Personal portfolio website built with **Astro v2.1.9** featuring a content collections architecture. Site domain: `devfitra.com`. Uses **Biome** for formatting/linting (not ESLint/Prettier) and follows the strictest TypeScript config.
+Personal portfolio website built with **Astro v5.16.3** featuring a content collections architecture. Site domain: `devfitra.com`. Uses **Biome v1.9.4** for formatting/linting (not ESLint/Prettier) and follows the strictest TypeScript config (`extends: "astro/tsconfigs/strictest"`). Requires **Node.js >=20.0.0**.
 
 ## Content Architecture
 Three distinct content collections in `src/content/`:
@@ -10,9 +10,11 @@ Three distinct content collections in `src/content/`:
 - **`blog/`** - Lifestyle content (travel, personal topics)
 
 Each collection has unique schemas defined in `src/content/config.ts` with Zod validation. Key differences:
-- Portfolio uses `publishDate` + `startDate/endDate`
-- Articles use `pubDate` + `minutesRead` (number)
-- Blogs use `pubDate` + `minutesRead` (union of number/string) + `categoryColor`
+- **Portfolio**: `publishDate`, `startDate/endDate`, `description` (optional), `technologies` (array), `featured`, `order`, `github`/`liveUrl`
+- **Articles**: `pubDate`, `description` (required), `minutesRead` (number, optional), `author`, `featuredImage`, `tags`, `draft`
+- **Blogs**: `pubDate`, `excerpt` (required), `minutesRead` (union of number/string, optional), `categoryColor`, `featuredImg`, `tags`, `draft`
+
+**CRITICAL**: Field names differ between collections - articles use `description`, blogs use `excerpt`; articles use `featuredImage`, blogs use `featuredImg`.
 
 ## Dynamic Routes Pattern
 All collections use `getStaticPaths()` with `getCollection()`:
@@ -41,7 +43,7 @@ All layouts use `Astro.props` for customization (pageTitle, metaDescription, wit
   - Dark theme by default: `--color-background: #161616`, `--color-text: #e0e0e0`
   - Font stack: Inter (Google Fonts) + system fonts
 - **CSS Modules** NOT used - prefer scoped Astro styles
-- Tabs for indentation (enforced by Biome)
+- **Biome formatting**: Tabs for indentation, double quotes for JavaScript strings (configured in `biome.json`)
 
 ## Component Patterns
 - **Navigation** (`src/components/Navigation.astro`) imports client-side JS via `<script>` tag for active menu state
