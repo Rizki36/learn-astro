@@ -148,7 +148,7 @@ const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
         <div class="project-card">
           <div style="position: relative;">
             <img 
-              src={project.data.image} 
+              src={project.data.image || "this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO IMAGE'"} 
               alt={project.data.title} 
               class="project-image"
               onerror="this.src='https://placehold.co/300x200/252525/CCCCCC?text=NO IMAGE'; this.onerror=null;"
