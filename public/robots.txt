@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://yourwebsite.com/sitemap.xml 
+Sitemap: https://devfitra.com/sitemap.xml 
