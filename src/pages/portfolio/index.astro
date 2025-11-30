@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { AUTHOR_NAME, SITE_URL } from '../../utils/schema';
 
 // SEO metadata for portfolio page
 const pageTitle = "Portfolio";
@@ -21,11 +22,11 @@ const portfolioSchema = {
 	"@type": "CollectionPage",
 	name: "Portfolio - DevFitra",
 	description: metaDescription,
-	url: "https://devfitra.com/portfolio",
+	url: `${SITE_URL}/portfolio`,
 	author: {
 		"@type": "Person",
-		"@id": "https://devfitra.com/#person",
-		name: "Fitra"
+		"@id": `${SITE_URL}/#person`,
+		name: AUTHOR_NAME
 	},
 	mainEntity: {
 		"@type": "ItemList",
@@ -36,12 +37,12 @@ const portfolioSchema = {
 				"@type": "CreativeWork",
 				name: project.data.title,
 				description: project.data.description || project.data.title,
-				image: project.data.image || "https://devfitra.com/images/og-image.jpg",
-				url: `https://devfitra.com/portfolio/${project.slug}`,
+				image: project.data.image || `${SITE_URL}/images/og-image.jpg`,
+				url: `${SITE_URL}/portfolio/${project.slug}`,
 				keywords: project.data.technologies.join(", "),
 				author: {
 					"@type": "Person",
-					name: "Fitra"
+					name: AUTHOR_NAME
 				}
 			}
 		}))

@@ -5,7 +5,7 @@
 
 export const SITE_URL = "https://devfitra.com";
 export const SITE_NAME = "DevFitra";
-export const AUTHOR_NAME = "Fitra";
+export const AUTHOR_NAME = "Rizki Fitra Rahman";
 
 /**
  * Person schema for the site author
@@ -15,7 +15,7 @@ export const personSchema = {
 	"@type": "Person",
 	"@id": `${SITE_URL}/#person`,
 	name: AUTHOR_NAME,
-	alternateName: "DevFitra",
+	alternateName: ["DevFitra", "Fitra"],
 	jobTitle: "Full Stack Developer",
 	description:
 		"Passionate Full Stack Developer specializing in React, NextJS, TypeScript and modern web technologies",
@@ -49,7 +49,7 @@ export const websiteSchema = {
 	url: SITE_URL,
 	name: SITE_NAME,
 	description:
-		"Portfolio and personal website of Fitra, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.",
+		"Portfolio and personal website of Rizki Fitra Rahman, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.",
 	publisher: {
 		"@id": `${SITE_URL}/#person`,
 	},
