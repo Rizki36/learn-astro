@@ -2,6 +2,7 @@
 import { ClientRouter } from "astro:transitions";
 import "../styles/global.css";
 import Navigation from "../components/Navigation.astro";
+import ChatBot from "../components/ChatBot.tsx";
 import { personSchema, websiteSchema } from "../utils/schema.ts";
 const {
 	pageTitle,
@@ -100,5 +101,6 @@ const baseSchemaData = {
     >
       <slot />
     </main>
+    <ChatBot client:only="react" />
   </body>
 </html>
