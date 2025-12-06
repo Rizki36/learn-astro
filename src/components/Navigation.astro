@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import logo from "../images/logo.svg";
+import "../styles/navigation.css";
+
+const menus = [
+	{
+		name: "Home",
+		link: "/",
+	},
+	{
+		name: "About",
+		link: "/about",
+	},
+	{
+		name: "Portfolio",
+		link: "/portfolio",
+	},
+	{
+		name: "Blog & Article",
+		link: "/posts",
+	},
+];
+---
+
+<nav class="navigation">
+    <div class="navigation__brand">
+        <Image
+            class="navigation__brand_logo"
+            src={logo}
+            alt="Logo"
+            width={40}
+            height={40}
+        />
+        DevFitra
+    </div>
+    <button
+        class="navigation__toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+    >
+        <span class="navigation__toggle-icon"></span>
+    </button>
+    <div class="navigation__menu">
+        {
+            menus.map((menu) => {
+                return <a href={menu.link}>{menu.name}</a>;
+            })
+        }
+    </div>
+</nav>
+<script>
+    import '../scripts/menu.js';
+</script>

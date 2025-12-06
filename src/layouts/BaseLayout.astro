@@ -1,39 +1,39 @@
 ---
-import { ClientRouter } from 'astro:transitions';
-import '../styles/global.css';
-import ChatBot from '../components/ChatBot.tsx';
-import Navigation from '../components/Navigation';
-import { personSchema, websiteSchema } from '../utils/schema.ts';
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import ChatBot from "../components/ChatBot.tsx";
+import Navigation from "../components/Navigation.astro";
+import { personSchema, websiteSchema } from "../utils/schema.ts";
 
 const {
-  pageTitle,
-  metaDescription,
-  metaKeywords,
-  ogImage = '/images/og-image.jpg',
-  ogType = 'website',
-  twitterCard = 'summary_large_image',
-  canonicalURL = Astro.url.href,
-  themeColor = '#161616',
-  schemaData = null,
+	pageTitle,
+	metaDescription,
+	metaKeywords,
+	ogImage = "/images/og-image.jpg",
+	ogType = "website",
+	twitterCard = "summary_large_image",
+	canonicalURL = Astro.url.href,
+	themeColor = "#161616",
+	schemaData = null,
 } = Astro.props;
 const {
-  withPadding = true,
-  withMaxWidth = true,
-  className,
-  style,
+	withPadding = true,
+	withMaxWidth = true,
+	className,
+	style,
 } = Astro.props;
 
 // Default description and title if not provided
-const siteTitle = 'DevFitra - Full Stack Developer';
+const siteTitle = "DevFitra - Full Stack Developer";
 const siteDescription =
-  'Portfolio and personal website of Rizki Fitra Rahman, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.';
+	"Portfolio and personal website of Rizki Fitra Rahman, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.";
 const siteKeywords =
-  'rizki fitra rahman, devfitra, developer, full stack, javascript, typescript, react, nextjs, laravel, portfolio, web development';
+	"rizki fitra rahman, devfitra, developer, full stack, javascript, typescript, react, nextjs, laravel, portfolio, web development";
 
 // Base JSON-LD structured data for website and person
 const baseSchemaData = {
-  '@context': 'https://schema.org',
-  '@graph': [websiteSchema, personSchema],
+	"@context": "https://schema.org",
+	"@graph": [websiteSchema, personSchema],
 };
 ---
 
@@ -116,7 +116,7 @@ const baseSchemaData = {
     <ClientRouter />
   </head>
   <body>
-    <Navigation client:load />
+    <Navigation />
     <main
       class={`
       main_wrapper 
