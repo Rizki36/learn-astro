@@ -1,74 +1,74 @@
 ---
-import getReadingTime from 'reading-time';
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { AUTHOR_NAME, SITE_URL } from '../utils/schema';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import getReadingTime from "reading-time";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { AUTHOR_NAME, SITE_URL } from "../utils/schema";
 
 // SEO metadata for blog page
-const pageTitle = 'Blog';
+const pageTitle = "Blog";
 const metaDescription =
-  'Read my latest articles and thoughts on web development, programming, and technology.';
+	"Read my latest articles and thoughts on web development, programming, and technology.";
 const metaKeywords =
-  'blog, web development, programming, react, nextjs, typescript, javascript, laravel, tech articles';
+	"blog, web development, programming, react, nextjs, typescript, javascript, laravel, tech articles";
 
 // Get posts from article collection
-const articlePosts = await getCollection('article', ({ data }) => {
-  // Filter out draft posts in production
-  return import.meta.env.PROD ? !data.draft : true;
+const articlePosts = await getCollection("article", ({ data }) => {
+	// Filter out draft posts in production
+	return import.meta.env.PROD ? !data.draft : true;
 });
 
 // Map article posts to a common format
 const normalizedArticlePosts = articlePosts.map((post) => {
-  const minutesRead =
-    post.data.minutesRead || getReadingTime(post.body || '').text;
+	const minutesRead =
+		post.data.minutesRead || getReadingTime(post.body || "").text;
 
-  return {
-    title: post.data.title,
-    description: post.data.description,
-    date: post.data.pubDate,
-    author: post.data.author || AUTHOR_NAME,
-    slug: post.id,
-    collectionType: 'article',
-    category: post.data.category || '',
-    categoryColor: null, // Blog posts don't have category colors
-    tags: post.data.tags || [],
-    image: post.data.featuredImage || '',
-    url: `/article/${post.id}`,
-    minutesRead: minutesRead,
-  };
+	return {
+		title: post.data.title,
+		description: post.data.description,
+		date: post.data.pubDate,
+		author: post.data.author || AUTHOR_NAME,
+		slug: post.id,
+		collectionType: "article",
+		category: post.data.category || "",
+		categoryColor: null, // Blog posts don't have category colors
+		tags: post.data.tags || [],
+		image: post.data.featuredImage || "",
+		url: `/article/${post.id}`,
+		minutesRead: minutesRead,
+	};
 });
 
 // Get posts from blog collection
-const blogPosts = await getCollection('blog', ({ data }) => {
-  // Filter out draft posts in production
-  return import.meta.env.PROD ? !data.draft : true;
+const blogPosts = await getCollection("blog", ({ data }) => {
+	// Filter out draft posts in production
+	return import.meta.env.PROD ? !data.draft : true;
 });
 
 // Map lifestyle posts to the same format
 const normalizedLifestylePosts = blogPosts.map((post) => {
-  // Convert minutesRead to number if it's a string
-  let minutesToRead = post.data.minutesRead;
-  if (typeof minutesToRead === 'string') {
-    minutesToRead = Number.parseInt(minutesToRead);
-  } else if (!minutesToRead) {
-    minutesToRead = getReadingTime(post.body || '').text;
-  }
+	// Convert minutesRead to number if it's a string
+	let minutesToRead = post.data.minutesRead;
+	if (typeof minutesToRead === "string") {
+		minutesToRead = Number.parseInt(minutesToRead);
+	} else if (!minutesToRead) {
+		minutesToRead = getReadingTime(post.body || "").text;
+	}
 
-  return {
-    title: post.data.title,
-    description: post.data.excerpt, // Use excerpt as description for posts
-    date: post.data.pubDate,
-    author: post.data.author || AUTHOR_NAME,
-    slug: post.id,
-    collectionType: 'blog',
-    category: post.data.category || '',
-    categoryColor: post.data.categoryColor || null,
-    tags: post.data.tags || [],
-    image: post.data.featuredImg || '', // Note the different field name
-    url: `/blog/${post.id}`, // Different URL structure for posts
-    minutesRead: minutesToRead,
-  };
+	return {
+		title: post.data.title,
+		description: post.data.excerpt, // Use excerpt as description for posts
+		date: post.data.pubDate,
+		author: post.data.author || AUTHOR_NAME,
+		slug: post.id,
+		collectionType: "blog",
+		category: post.data.category || "",
+		categoryColor: post.data.categoryColor || null,
+		tags: post.data.tags || [],
+		image: post.data.featuredImg || "", // Note the different field name
+		url: `/blog/${post.id}`, // Different URL structure for posts
+		minutesRead: minutesToRead,
+	};
 });
 
 // Combine both post types
@@ -79,34 +79,34 @@ const posts = combinedPosts.sort((a, b) => b.date.getTime() - a.date.getTime());
 
 // Structured data for blog listing (JSON-LD)
 const blogCollectionSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: 'Blog & Articles - DevFitra',
-  description: metaDescription,
-  url: `${SITE_URL}/posts`,
-  author: {
-    '@type': 'Person',
-    '@id': `${SITE_URL}/#person`,
-    name: AUTHOR_NAME,
-  },
-  mainEntity: {
-    '@type': 'Blog',
-    name: "DevFitra's Blog & Articles",
-    description: metaDescription,
-    blogPost: posts.map((post) => ({
-      '@type': 'BlogPosting',
-      headline: post.title,
-      description: post.description,
-      datePublished: post.date.toISOString(),
-      url: `${SITE_URL}${post.url}`,
-      author: {
-        '@type': 'Person',
-        name: post.author,
-      },
-      keywords: post.tags.join(', '),
-      articleSection: post.category || 'General',
-    })),
-  },
+	"@context": "https://schema.org",
+	"@type": "CollectionPage",
+	name: "Blog & Articles - DevFitra",
+	description: metaDescription,
+	url: `${SITE_URL}/posts`,
+	author: {
+		"@type": "Person",
+		"@id": `${SITE_URL}/#person`,
+		name: AUTHOR_NAME,
+	},
+	mainEntity: {
+		"@type": "Blog",
+		name: "DevFitra's Blog & Articles",
+		description: metaDescription,
+		blogPost: posts.map((post) => ({
+			"@type": "BlogPosting",
+			headline: post.title,
+			description: post.description,
+			datePublished: post.date.toISOString(),
+			url: `${SITE_URL}${post.url}`,
+			author: {
+				"@type": "Person",
+				name: post.author,
+			},
+			keywords: post.tags.join(", "),
+			articleSection: post.category || "General",
+		})),
+	},
 };
 ---
 

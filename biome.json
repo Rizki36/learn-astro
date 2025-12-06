@@ -7,7 +7,13 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!.astro/**"]
+		"includes": [
+			"**",
+			"!.astro/**",
+			"!node_modules/**",
+			"!dist/**",
+			"!.vercel/**"
+		]
 	},
 	"formatter": {
 		"enabled": true,
