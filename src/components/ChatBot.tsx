@@ -2,8 +2,8 @@ import { useChat } from "@ai-sdk/react";
 import { TextStreamChatTransport } from "ai";
 import type { UIMessage } from "ai";
 import { useEffect, useRef, useState } from "react";
-import "./ChatBot.css";
 import { MemoizedMarkdown } from "./MemoizedMarkdown";
+import "../styles/chatbot.css";
 
 export default function ChatBot() {
 	const [isOpen, setIsOpen] = useState(false);
