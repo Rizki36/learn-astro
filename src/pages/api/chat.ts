@@ -16,7 +16,6 @@ export const POST: APIRoute = async ({ request, site }) => {
 		const contextUrl = site
 			? `${site}api/chatbot-context.json`
 			: "http://localhost:4321/api/chatbot-context.json";
-		console.log("Context URL:", contextUrl);
 
 		const contextResponse = await fetch(contextUrl);
 		const context = await contextResponse.json();
