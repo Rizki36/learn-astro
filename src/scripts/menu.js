@@ -1,7 +1,6 @@
 function initializeMenu() {
 	// check if the menu is active
 	const menuItems = document.querySelectorAll(".navigation__menu a");
-	// biome-ignore lint/complexity/noForEach: <explanation>
 	menuItems.forEach((item) => {
 		if (item.getAttribute("href") === window.location.pathname) {
 			item.classList.add("active");
@@ -25,7 +24,6 @@ function initializeMenu() {
 		});
 
 		// Close menu when clicking on a link
-		// biome-ignore lint/complexity/noForEach: <explanation>
 		menuItems.forEach((item) => {
 			item.addEventListener("click", () => {
 				menu.classList.remove("navigation__menu--open");

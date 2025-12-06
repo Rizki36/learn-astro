@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
-import BaseLayout from "./BaseLayout.astro";
 import { createTechArticleSchema } from "../utils/schema.ts";
+import BaseLayout from "./BaseLayout.astro";
 
 const { frontmatter } = Astro.props;
 const {
@@ -30,8 +30,8 @@ const articleSchema = createTechArticleSchema({
 	image,
 	tags,
 	author,
-	minutesRead
-})
+	minutesRead,
+});
 ---
 
 <style>

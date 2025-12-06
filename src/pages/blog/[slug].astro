@@ -1,33 +1,36 @@
 ---
-import { getCollection } from 'astro:content';
-import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getCollection } from "astro:content";
+import BlogLayout from "../../layouts/BlogLayout.astro";
 
 // Generate static paths for all posts
 export async function getStaticPaths() {
-  const postEntries = await getCollection('blog', ({ data }) => {
-    // Filter out draft posts in production
-    return import.meta.env.PROD ? !data.draft : true;
-  });
-  
-  return postEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+	const postEntries = await getCollection("blog", ({ data }) => {
+		// Filter out draft posts in production
+		return import.meta.env.PROD ? !data.draft : true;
+	});
+
+	return postEntries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
 }
 
 // Get the post entry from props
-const { entry }: { entry: import('astro:content').CollectionEntry<'blog'> } = Astro.props;
+const { entry }: { entry: import("astro:content").CollectionEntry<"blog"> } =
+	Astro.props;
 const { Content } = await entry.render();
 
 // Create frontmatter-like object for BlogLayout
 const postData = {
-  title: entry.data.title,
-  excerpt: entry.data.excerpt,
-  pubDate: entry.data.pubDate,
-  createdAt: entry.data.createdAt || entry.data.pubDate,
-  category: entry.data.category || "",
-  categoryColor: entry.data.categoryColor || "#333333",
-  featuredImg: entry.data.featuredImg || "https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE",
+	title: entry.data.title,
+	excerpt: entry.data.excerpt,
+	pubDate: entry.data.pubDate,
+	createdAt: entry.data.createdAt || entry.data.pubDate,
+	category: entry.data.category || "",
+	categoryColor: entry.data.categoryColor || "#333333",
+	featuredImg:
+		entry.data.featuredImg ||
+		"https://placehold.co/800x600/252525/CCCCCC?text=NO IMAGE",
 };
 ---
 

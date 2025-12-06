@@ -27,7 +27,7 @@ export const MemoizedMarkdown = memo(
 			<MemoizedMarkdownBlock
 				content={block}
 				key={`${id}-block_${
-					// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+					// biome-ignore lint/suspicious/noArrayIndexKey: intended to use array
 					index
 				}`}
 			/>

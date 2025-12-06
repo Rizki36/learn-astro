@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 
 // Get the current post title or slug
@@ -17,38 +17,47 @@ const latestPosts = allPostEntries
     // Filter out the current post (by title or slug)
     return post.slug !== currentPost && post.data.title !== currentPost;
   })
-  .sort(
-    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-  )
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 2)
-  .map(post => ({
+  .map((post) => ({
     title: post.data.title,
     pubDate: post.data.pubDate,
     category: post.data.category || '',
     featuredImg: post.data.featuredImg || '',
     url: `/blog/${post.slug}`,
-    slug: post.slug
+    slug: post.slug,
   }));
 ---
 
 <div class="latest-posts-container">
-  {latestPosts.map(post => (
-    <a href={post.url} class="latest-post">
-      <div class="post-meta">
-        <time>{post.pubDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
-      </div>
-      <h4 class="post-title">{post.title}</h4>
-      <div class="post-image-container">
-        <Image 
-          src={post.featuredImg || `https://placehold.co/300x300/252525/CCCCCC?text=${encodeURIComponent(post.category)}`}
-          alt={`Image for ${post.title}`}
-          class="post-image"
-          width={300}
-          height={300}
-        />
-      </div>
-    </a>
-  ))}
+  {
+    latestPosts.map((post) => (
+      <a href={post.url} class="latest-post">
+        <div class="post-meta">
+          <time>
+            {post.pubDate.toLocaleDateString('en-US', {
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+            })}
+          </time>
+        </div>
+        <h4 class="post-title">{post.title}</h4>
+        <div class="post-image-container">
+          <Image
+            src={
+              post.featuredImg ||
+              `https://placehold.co/300x300/252525/CCCCCC?text=${encodeURIComponent(post.category)}`
+            }
+            alt={`Image for ${post.title}`}
+            class="post-image"
+            width={300}
+            height={300}
+          />
+        </div>
+      </a>
+    ))
+  }
 </div>
 
 <style>
@@ -58,13 +67,13 @@ const latestPosts = allPostEntries
     gap: 2rem;
     margin-top: 1.5rem;
   }
-  
+
   @media (min-width: 768px) {
     .latest-posts-container {
       grid-template-columns: 1fr 1fr;
     }
   }
-  
+
   .latest-post {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -75,31 +84,31 @@ const latestPosts = allPostEntries
     border-radius: 0.5rem;
     transition: background-color 0.2s;
   }
-  
+
   .latest-post:hover {
     background-color: #252525;
   }
-  
+
   .post-meta {
     font-size: 0.8rem;
     color: var(--color-text-light);
     margin-bottom: 0.5rem;
   }
-  
+
   .post-title {
     font-size: 1.1rem;
     margin: 0;
     line-height: 1.4;
     font-weight: 500;
   }
-  
+
   .post-image-container {
     width: 100%;
     height: 100%;
     border-radius: 0.25rem;
     overflow: hidden;
   }
-  
+
   .post-image {
     width: 100%;
     height: 100%;
@@ -107,7 +116,7 @@ const latestPosts = allPostEntries
     object-fit: cover;
     border-radius: 0.25rem;
   }
-  
+
   .post-image-placeholder {
     display: none; /* Hide the old placeholder */
   }

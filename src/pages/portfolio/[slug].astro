@@ -1,28 +1,34 @@
 ---
 import { Image } from "astro:assets";
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { createProjectSchema } from "../../utils/schema.ts";
 
 // Generate static paths for all portfolio items
 export async function getStaticPaths() {
-  const portfolioEntries = await getCollection('portfolio');
-  return portfolioEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+	const portfolioEntries = await getCollection("portfolio");
+	return portfolioEntries.map((entry) => ({
+		params: { slug: entry.slug },
+		props: { entry },
+	}));
 }
 
 // Get the portfolio entry from props
-const { entry }: { entry: import('astro:content').CollectionEntry<'portfolio'> } = Astro.props;
+const {
+	entry,
+}: { entry: import("astro:content").CollectionEntry<"portfolio"> } =
+	Astro.props;
 const { Content } = await entry.render();
 
 // Format the date
-const formattedDate = new Date(entry.data.publishDate).toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-});
+const formattedDate = new Date(entry.data.publishDate).toLocaleDateString(
+	"en-US",
+	{
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	},
+);
 
 // JSON-LD structured data for portfolio project
 const projectSchema = createProjectSchema({
@@ -33,7 +39,7 @@ const projectSchema = createProjectSchema({
 	...(entry.data.image && { image: entry.data.image }),
 	technologies: entry.data.technologies,
 	...(entry.data.github && { github: entry.data.github }),
-	...(entry.data.liveUrl && { liveUrl: entry.data.liveUrl })
+	...(entry.data.liveUrl && { liveUrl: entry.data.liveUrl }),
 });
 ---
 

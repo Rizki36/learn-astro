@@ -1,20 +1,20 @@
 ---
-import '../styles/global.css';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { personSchema } from '../utils/schema.ts';
+import "../styles/global.css";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { personSchema } from "../utils/schema.ts";
 
 // SEO metadata for home page
-const pageTitle = 'Home';
+const pageTitle = "Home";
 const metaDescription =
-  "Welcome to DevFitra's website. I'm Rizki Fitra Rahman, a passionate Full Stack Developer specializing in modern web technologies like React, NextJS, and Laravel.";
+	"Welcome to DevFitra's website. I'm Rizki Fitra Rahman, a passionate Full Stack Developer specializing in modern web technologies like React, NextJS, and Laravel.";
 const metaKeywords =
-  'Fitra, web developer, full stack developer, react developer, nextjs, typescript, javascript, portfolio, Rizki Fitra Rahman';
+	"Fitra, web developer, full stack developer, react developer, nextjs, typescript, javascript, portfolio, Rizki Fitra Rahman";
 
 // JSON-LD structured data for profile page
 const profilePageSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfilePage',
-  mainEntity: personSchema,
+	"@context": "https://schema.org",
+	"@type": "ProfilePage",
+	mainEntity: personSchema,
 };
 ---
 

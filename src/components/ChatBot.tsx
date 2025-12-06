@@ -1,6 +1,6 @@
 import { useChat } from "@ai-sdk/react";
-import { TextStreamChatTransport } from "ai";
 import type { UIMessage } from "ai";
+import { TextStreamChatTransport } from "ai";
 import { useEffect, useRef, useState } from "react";
 import { MemoizedMarkdown } from "./MemoizedMarkdown";
 import "../styles/chatbot.css";
@@ -35,7 +35,6 @@ export default function ChatBot() {
 		messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
 	};
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
 	useEffect(() => {
 		scrollToBottom();
 	}, [messages]);
@@ -73,7 +72,6 @@ export default function ChatBot() {
 				aria-label="Toggle chat"
 			>
 				{isOpen ? (
-					// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 					<svg
 						width="24"
 						height="24"
@@ -84,10 +82,10 @@ export default function ChatBot() {
 						strokeLinecap="round"
 						strokeLinejoin="round"
 					>
+						<title>Close chat</title>
 						<path d="M18 6L6 18M6 6l12 12" />
 					</svg>
 				) : (
-					// biome-ignore lint/a11y/noSvgWithoutTitle: <explanation>
 					<svg
 						width="24"
 						height="24"
@@ -98,6 +96,7 @@ export default function ChatBot() {
 						strokeLinecap="round"
 						strokeLinejoin="round"
 					>
+						<title>Open chat</title>
 						<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
 					</svg>
 				)}
@@ -195,7 +194,6 @@ export default function ChatBot() {
 							className="chatbot-send-button"
 							aria-label="Send message"
 						>
-							{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 							<svg
 								width="20"
 								height="20"
@@ -206,6 +204,7 @@ export default function ChatBot() {
 								strokeLinecap="round"
 								strokeLinejoin="round"
 							>
+								<title>Send</title>
 								<path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
 							</svg>
 						</button>
