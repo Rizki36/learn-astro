@@ -1,4 +1,5 @@
 ---
+slug: dikirim-in
 title: Dikirim.in
 description: Third-party shipping application. Integrates JNE, JNT, SAP, Sicepat APIs and Xendit payment.
 startDate: 2021-04-01

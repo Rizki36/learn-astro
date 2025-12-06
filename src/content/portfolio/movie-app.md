@@ -1,4 +1,5 @@
 ---
+slug: movie-app
 title: Movie App
 description: Simple movie app using TMDB API.
 startDate: 2020-04-01

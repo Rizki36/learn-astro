@@ -1,4 +1,5 @@
 ---
+slug: mudah-belajar-ilmu-shorof
 title: Mudah Belajar Ilmu Shorof
 description: Full-stack Arabic language learning platform specializing in ilmu shorof. Features QR code integration for physical textbooks.
 startDate: 2024-06-01

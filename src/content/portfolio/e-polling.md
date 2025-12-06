@@ -1,4 +1,5 @@
 ---
+slug: e-polling
 title: E-Polling
 description: Desktop polling sub-application for E-Scoring.
 startDate: 2019-02-01

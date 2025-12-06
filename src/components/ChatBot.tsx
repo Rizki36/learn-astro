@@ -136,6 +136,8 @@ export default function ChatBot() {
 													/>
 												);
 											}
+
+											return null;
 										})}
 									</div>
 									{message.role === "user" && (

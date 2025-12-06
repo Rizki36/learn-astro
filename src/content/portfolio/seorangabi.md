@@ -1,4 +1,5 @@
 ---
+slug: seorangabi
 title: SeorangAbi
 description: Company/Project Landing Page.
 startDate: 2024-12-01

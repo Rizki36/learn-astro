@@ -1,4 +1,5 @@
 ---
+slug: redesigned-pondok-pesantren-nurul-islam-website
 title: Redesigned Pondok Pesantren Nurul Islam Website
 description: Redesign using Astro.js & React. Achieved 30% performance improvement.
 startDate: 2025-05-01

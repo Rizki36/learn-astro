@@ -1,4 +1,5 @@
 ---
+slug: inaf
 title: Inaf
 description: Todo App Monorepo. Server - Express/GraphQL/Prisma. Client - Next.js/SWR/Material UI.
 startDate: 2022-01-01

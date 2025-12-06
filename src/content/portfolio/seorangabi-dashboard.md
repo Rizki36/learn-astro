@@ -1,4 +1,5 @@
 ---
+slug: seorangabi-dashboard
 title: SeorangAbi Dashboard
 description: Administrative control center for the SeorangAbi platform.
 startDate: 2025-02-01

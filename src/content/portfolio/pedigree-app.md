@@ -1,4 +1,5 @@
 ---
+slug: pedigree-app
 title: Pedigree App
 description: Web-based application to manage animal data and generate pedigree trees. Features circular dependency detection.
 startDate: 2025-04-01

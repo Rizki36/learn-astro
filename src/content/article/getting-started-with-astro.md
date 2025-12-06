@@ -1,4 +1,5 @@
 ---
+slug: getting-started-with-astro
 title: "Getting Started with Astro: The Modern Web Framework (Dummy)"
 description: "Learn how Astro can help you build faster websites with less JavaScript and a better developer experience."
 pubDate: 2023-09-25

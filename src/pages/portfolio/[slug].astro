@@ -1,24 +1,24 @@
 ---
 import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
+import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { createProjectSchema } from "../../utils/schema.ts";
+
+export const prerender = true;
 
 // Generate static paths for all portfolio items
 export async function getStaticPaths() {
 	const portfolioEntries = await getCollection("portfolio");
+	console.log(portfolioEntries);
 	return portfolioEntries.map((entry) => ({
-		params: { slug: entry.slug },
+		params: { slug: entry.id },
 		props: { entry },
 	}));
 }
 
 // Get the portfolio entry from props
-const {
-	entry,
-}: { entry: import("astro:content").CollectionEntry<"portfolio"> } =
-	Astro.props;
-const { Content } = await entry.render();
+const { entry } = Astro.props;
+const { Content } = await render(entry);
 
 // Format the date
 const formattedDate = new Date(entry.data.publishDate).toLocaleDateString(
@@ -162,7 +162,7 @@ const projectSchema = createProjectSchema({
 <BaseLayout
   pageTitle={entry.data.title}
   metaDescription={entry.data.description}
-  metaKeywords={entry.data.technologies.join(", ")}
+  metaKeywords={entry.data.technologies.join(', ')}
   ogImage={entry.data.image}
   ogType="article"
   schemaData={projectSchema}
@@ -174,36 +174,53 @@ const projectSchema = createProjectSchema({
         <div class="project-meta">
           <span class="project-date">Completed on {formattedDate}</span>
         </div>
-        <Image 
-          src={entry.data.image || `https://placehold.co/800x400/252525/CCCCCC?text=${encodeURIComponent('NO IMAGE')}`} 
-          alt={entry.data.title} 
+        <Image
+          src={entry.data.image ||
+            `https://placehold.co/800x400/252525/CCCCCC?text=${encodeURIComponent('NO IMAGE')}`}
+          alt={entry.data.title}
           class="project-image"
           width={800}
           height={400}
         />
         <div class="project-tags">
-          {entry.data.technologies.map(tech => (
-            <span class="project-tag">{tech}</span>
-          ))}
+          {
+            entry.data.technologies.map((tech) => (
+              <span class="project-tag">{tech}</span>
+            ))
+          }
         </div>
         <div class="project-links">
-          {entry.data.liveUrl && 
-            <a href={entry.data.liveUrl} class="project-link" target="_blank" rel="noopener noreferrer">
-              Live Demo
-            </a>
+          {
+            entry.data.liveUrl && (
+              <a
+                href={entry.data.liveUrl}
+                class="project-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Live Demo
+              </a>
+            )
           }
-          {entry.data.github && 
-            <a href={entry.data.github} class="project-link github-link" target="_blank" rel="noopener noreferrer">
-              View on GitHub
-            </a>
+          {
+            entry.data.github && (
+              <a
+                href={entry.data.github}
+                class="project-link github-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View on GitHub
+              </a>
+            )
           }
         </div>
       </header>
-      
+
       <div class="content">
         <Content />
       </div>
-      
+
       <a href="/portfolio" class="back-link">← Back to Portfolio</a>
     </article>
   </div>

@@ -1,4 +1,5 @@
 ---
+slug: lesu-dicoding-submission
 title: Lesu - Dicoding submission
 description: Restaurant App with PWA, Integration Test (Karma), and E2E Test (Codecept).
 startDate: 2023-07-01

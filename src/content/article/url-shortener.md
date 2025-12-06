@@ -1,4 +1,5 @@
 ---
+slug: url-shortener
 title: "Building a URL shortener (Dummy)"
 description: "I used Nextjs to build a simple URL Shortener and it looks really great and here's the stack I used to build this project. Learn about the implementation details and key features."
 pubDate: 2024-12-23

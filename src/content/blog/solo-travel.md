@@ -1,4 +1,5 @@
 ---
+slug: solo-travel
 title: "The Art of Solo Travel: Embracing Independence and Discovery (Dummy)"
 excerpt: "Traveling solo can be a transformative experience, offering unparalleled opportunities for self-discovery and personal growth. Solo trips can take you out of your comfort zone to explore the joys of independent adventures."
 pubDate: 2024-03-23

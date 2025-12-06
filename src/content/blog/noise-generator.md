@@ -1,4 +1,5 @@
 ---
+slug: noise-generator
 title: "How I pulled off a noise generator plugin (Dummy)"
 excerpt: "As the year comes to an end we try I try to come to terms with how much I have achieved. Here are three tips I can tell you..."
 pubDate: 2024-12-01

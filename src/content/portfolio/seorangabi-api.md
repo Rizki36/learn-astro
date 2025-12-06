@@ -1,4 +1,5 @@
 ---
+slug: seorangabi-api
 title: SeorangAbi API
 description: Central data provider and integration bridge with Discord for the ecosystem.
 startDate: 2024-12-01

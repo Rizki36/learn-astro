@@ -1,32 +1,32 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
 
 // Get the current post title or slug
 const { currentPost } = Astro.props;
 
 // Get all posts from the 'blog' collection
-const allPostEntries = await getCollection('blog', ({ data }) => {
-  // Filter out draft posts in production
-  return import.meta.env.PROD ? !data.draft : true;
+const allPostEntries = await getCollection("blog", ({ data }) => {
+	// Filter out draft posts in production
+	return import.meta.env.PROD ? !data.draft : true;
 });
 
 // Sort by date and get the 2 most recent posts that aren't the current one
 const latestPosts = allPostEntries
-  .filter((post) => {
-    // Filter out the current post (by title or slug)
-    return post.slug !== currentPost && post.data.title !== currentPost;
-  })
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 2)
-  .map((post) => ({
-    title: post.data.title,
-    pubDate: post.data.pubDate,
-    category: post.data.category || '',
-    featuredImg: post.data.featuredImg || '',
-    url: `/blog/${post.slug}`,
-    slug: post.slug,
-  }));
+	.filter((post) => {
+		// Filter out the current post (by title or slug)
+		return post.id !== currentPost && post.data.title !== currentPost;
+	})
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 2)
+	.map((post) => ({
+		title: post.data.title,
+		pubDate: post.data.pubDate,
+		category: post.data.category || "",
+		featuredImg: post.data.featuredImg || "",
+		url: `/blog/${post.id}`,
+		slug: post.id,
+	}));
 ---
 
 <div class="latest-posts-container">

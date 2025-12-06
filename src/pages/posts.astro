@@ -37,20 +37,21 @@ const articlePosts = await getCollection("article", ({ data }) => {
 
 // Map article posts to a common format
 const normalizedArticlePosts = articlePosts.map((post) => {
-	const minutesRead = post.data.minutesRead || calculateReadingTime(post.body);
+	const minutesRead =
+		post.data.minutesRead || calculateReadingTime(post.body || "");
 
 	return {
 		title: post.data.title,
 		description: post.data.description,
 		date: post.data.pubDate,
 		author: post.data.author || "Fitra",
-		slug: post.slug,
+		slug: post.id,
 		collectionType: "article",
 		category: post.data.category || "",
 		categoryColor: null, // Blog posts don't have category colors
 		tags: post.data.tags || [],
 		image: post.data.featuredImage || "",
-		url: `/article/${post.slug}`,
+		url: `/article/${post.id}`,
 		minutesRead: minutesRead,
 	};
 });
@@ -67,9 +68,9 @@ const normalizedLifestylePosts = blogPosts.map((post) => {
 	let minutesToRead = post.data.minutesRead;
 	if (typeof minutesToRead === "string") {
 		minutesToRead =
-			Number.parseInt(minutesToRead) || calculateReadingTime(post.body);
+			Number.parseInt(minutesToRead) || calculateReadingTime(post.body || "");
 	} else if (!minutesToRead) {
-		minutesToRead = calculateReadingTime(post.body);
+		minutesToRead = calculateReadingTime(post.body || "");
 	}
 
 	return {
@@ -77,13 +78,13 @@ const normalizedLifestylePosts = blogPosts.map((post) => {
 		description: post.data.excerpt, // Use excerpt as description for posts
 		date: post.data.pubDate,
 		author: post.data.author || "Fitra",
-		slug: post.slug,
+		slug: post.id,
 		collectionType: "blog",
 		category: post.data.category || "",
 		categoryColor: post.data.categoryColor || null,
 		tags: post.data.tags || [],
 		image: post.data.featuredImg || "", // Note the different field name
-		url: `/blog/${post.slug}`, // Different URL structure for posts
+		url: `/blog/${post.id}`, // Different URL structure for posts
 		minutesRead: minutesToRead,
 	};
 });
@@ -181,7 +182,7 @@ const blogCollectionSchema = {
     font-size: 0.875rem;
     color: var(--color-text-light);
   }
-  
+
   .blog__post-category {
     font-size: 0.75rem;
     padding: 0.25rem 0.5rem;
@@ -248,86 +249,120 @@ const blogCollectionSchema = {
   <div class="blog__container">
     <header class="blog__header">
       <h1 class="blog__title text-gradient">Blog & Article</h1>
-      <p class="blog__description">Thoughts, ideas, and insights on web development and technology.</p>
+      <p class="blog__description">
+        Thoughts, ideas, and insights on web development and technology.
+      </p>
     </header>
 
-    {posts.length > 0 && posts[0] && (
-      <article class="blog__post-featured">
-        {posts[0].image && (
-          <Image 
-            class="blog__post-featured-image" 
-            src={posts[0].image} 
-            alt={posts[0].title}
-            width={800}
-            height={200}
-          />
-        )}
-        <div class="blog__post-featured-content">
-          <h2 class="blog__post-title">{posts[0].title}</h2>
-          <div class="blog__post-meta">
-            <time class="blog__post-date" datetime={posts[0].date.toISOString()}>
-              {posts[0].date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </time>
-            {posts[0].minutesRead && (
-              <>
-                <span class="blog__post-meta-separator">•</span>
-                <span class="blog__post-read-time">{posts[0].minutesRead} min read</span>
-              </>
-            )}
-            {posts[0].category && (
-              <>
-                <span class="blog__post-meta-separator">•</span>
-                <span class="blog__post-category" style={posts[0].categoryColor ? `background-color: ${posts[0].categoryColor}; color: #333;` : ''}>
-                  {posts[0].category}
-                </span>
-              </>
-            )}
-          </div>
-          <p class="blog__post-description">{posts[0].description}</p>
-          <a href={posts[0].url} class="blog__post-link">Read more</a>
-        </div>
-      </article>
-    )}
-
-    <div class="blog__post-list">
-      {posts.length === 0 ? (
-        <p>No posts yet. Check back soon!</p>
-      ) : (
-        posts.slice(1).map(post => (
-          <article class="blog__post">
-            <h2 class="blog__post-title">{post.title}</h2>
+    {
+      posts.length > 0 && posts[0] && (
+        <article class="blog__post-featured">
+          {posts[0].image && (
+            <Image
+              class="blog__post-featured-image"
+              src={posts[0].image}
+              alt={posts[0].title}
+              width={800}
+              height={200}
+            />
+          )}
+          <div class="blog__post-featured-content">
+            <h2 class="blog__post-title">{posts[0].title}</h2>
             <div class="blog__post-meta">
-              <time class="blog__post-date" datetime={post.date.toISOString()}>
-                {post.date.toLocaleDateString('en-US', {
+              <time
+                class="blog__post-date"
+                datetime={posts[0].date.toISOString()}
+              >
+                {posts[0].date.toLocaleDateString('en-US', {
                   year: 'numeric',
                   month: 'long',
-                  day: 'numeric'
+                  day: 'numeric',
                 })}
               </time>
-              {post.minutesRead && (
+              {posts[0].minutesRead && (
                 <>
                   <span class="blog__post-meta-separator">•</span>
-                  <span class="blog__post-read-time">{post.minutesRead} min read</span>
+                  <span class="blog__post-read-time">
+                    {posts[0].minutesRead} min read
+                  </span>
                 </>
               )}
-              {post.category && (
+              {posts[0].category && (
                 <>
                   <span class="blog__post-meta-separator">•</span>
-                  <span class="blog__post-category" style={post.categoryColor ? `background-color: ${post.categoryColor}; color: #333;` : ''}>
-                  {post.category}
-                </span>
+                  <span
+                    class="blog__post-category"
+                    style={
+                      posts[0].categoryColor
+                        ? `background-color: ${posts[0].categoryColor}; color: #333;`
+                        : ''
+                    }
+                  >
+                    {posts[0].category}
+                  </span>
                 </>
               )}
             </div>
-            <p class="blog__post-description">{post.description}</p>
-            <a href={post.url} class="blog__post-link">Read more</a>
-          </article>
-        ))
-      )}
+            <p class="blog__post-description">{posts[0].description}</p>
+            <a href={posts[0].url} class="blog__post-link">
+              Read more
+            </a>
+          </div>
+        </article>
+      )
+    }
+
+    <div class="blog__post-list">
+      {
+        posts.length === 0 ? (
+          <p>No posts yet. Check back soon!</p>
+        ) : (
+          posts.slice(1).map((post) => (
+            <article class="blog__post">
+              <h2 class="blog__post-title">{post.title}</h2>
+              <div class="blog__post-meta">
+                <time
+                  class="blog__post-date"
+                  datetime={post.date.toISOString()}
+                >
+                  {post.date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </time>
+                {post.minutesRead && (
+                  <>
+                    <span class="blog__post-meta-separator">•</span>
+                    <span class="blog__post-read-time">
+                      {post.minutesRead} min read
+                    </span>
+                  </>
+                )}
+                {post.category && (
+                  <>
+                    <span class="blog__post-meta-separator">•</span>
+                    <span
+                      class="blog__post-category"
+                      style={
+                        post.categoryColor
+                          ? `background-color: ${post.categoryColor}; color: #333;`
+                          : ''
+                      }
+                    >
+                      {post.category}
+                    </span>
+                  </>
+                )}
+              </div>
+              <p class="blog__post-description">{post.description}</p>
+              <a href={post.url} class="blog__post-link">
+                Read more
+              </a>
+            </article>
+          ))
+        )
+      }
     </div>
   </div>
 </BaseLayout>

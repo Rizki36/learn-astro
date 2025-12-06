@@ -1,4 +1,5 @@
 ---
+slug: santri-kita
 title: Santri Kita
 description: Android app for managing santri activities in Islamic boarding school.
 startDate: 2020-01-01

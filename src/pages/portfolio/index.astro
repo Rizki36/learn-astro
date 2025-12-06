@@ -39,7 +39,7 @@ const portfolioSchema = {
 				name: project.data.title,
 				description: project.data.description || project.data.title,
 				image: project.data.image || `${SITE_URL}/images/og-image.jpg`,
-				url: `${SITE_URL}/portfolio/${project.slug}`,
+				url: `${SITE_URL}/portfolio/${project.id}`,
 				keywords: project.data.technologies.join(", "),
 				author: {
 					"@type": "Person",
@@ -100,7 +100,9 @@ const portfolioSchema = {
     background-color: #1e1e1e;
     border: 1px solid var(--color-border, #333333);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -117,7 +119,7 @@ const portfolioSchema = {
     .project-card {
       transition: none;
     }
-    
+
     .project-card:hover,
     .project-card:focus-within {
       transform: none;
@@ -211,7 +213,9 @@ const portfolioSchema = {
     text-decoration: none;
     border-radius: 4px;
     font-size: 0.9rem;
-    transition: background-color 0.3s ease, outline 0.2s ease;
+    transition:
+      background-color 0.3s ease,
+      outline 0.2s ease;
     font-weight: 500;
     border: 1px solid #666;
   }
@@ -258,85 +262,108 @@ const portfolioSchema = {
   schemaData={portfolioSchema}
 >
   <a href="#main-content" class="skip-link">Skip to main content</a>
-  
+
   <div class="portfolio-container">
     <header class="portfolio-header">
       <h1 class="portfolio-title text-gradient">My Portfolio</h1>
       <p class="portfolio-description">
-        A collection of my latest work showcasing my skills and expertise in web development.
-        Each project represents unique challenges and solutions I've implemented.
+        A collection of my latest work showcasing my skills and expertise in web
+        development. Each project represents unique challenges and solutions
+        I've implemented.
       </p>
     </header>
 
     <main id="main-content">
       <ul class="projects-grid" role="list" aria-label="Portfolio projects">
-        {projects.map((project, index) => (
-          <li>
-            <article class="project-card" aria-labelledby={`project-title-${index}`}>
-              <div class="project-image-wrapper">
-                <Image 
-                  src={project.data.image || "https://placehold.co/300x200/252525/CCCCCC?text=NO%20IMAGE"} 
-                  alt={project.data.image ? `Screenshot of ${project.data.title} project` : `No image available for ${project.data.title}`}
-                  class="project-image"
-                  loading="lazy"
-                  width={300}
-                  height={200}
-                />
-                {project.data.featured && (
-                  <span class="featured-badge" aria-label="Featured project">Featured</span>
-                )}
-              </div>
-              <div class="project-content">
-                <h2 class="project-title" id={`project-title-${index}`}>{project.data.title}</h2>
-                <p class="project-description">{project.data.description}</p>
-                <ul class="project-tags" aria-label="Technologies used">
-                  {project.data.technologies.slice(0, 2).map((tech) => (
-                    <li class="project-tag">{tech}</li>
-                  ))}
-                  {project.data.technologies.length > 2 && (
-                    <li class="project-tag" title={`+${project.data.technologies.length - 2} more: ${project.data.technologies.slice(2).join(', ')}`}>
-                      +{project.data.technologies.length - 2} more
-                    </li>
+        {
+          projects.map((project, index) => (
+            <li>
+              <article
+                class="project-card"
+                aria-labelledby={`project-title-${index}`}
+              >
+                <div class="project-image-wrapper">
+                  <Image
+                    src={
+                      project.data.image ||
+                      'https://placehold.co/300x200/252525/CCCCCC?text=NO%20IMAGE'
+                    }
+                    alt={
+                      project.data.image
+                        ? `Screenshot of ${project.data.title} project`
+                        : `No image available for ${project.data.title}`
+                    }
+                    class="project-image"
+                    loading="lazy"
+                    width={300}
+                    height={200}
+                  />
+                  {project.data.featured && (
+                    <span class="featured-badge" aria-label="Featured project">
+                      Featured
+                    </span>
                   )}
-                </ul>
-                <hr class="project-divider" />
-                <nav class="project-links" aria-label={`Links for ${project.data.title}`}>
-                  <a 
-                    href={`/portfolio/${project.slug}`} 
-                    class="project-link"
-                    aria-label={`View details about ${project.data.title}`}
+                </div>
+                <div class="project-content">
+                  <h2 class="project-title" id={`project-title-${index}`}>
+                    {project.data.title}
+                  </h2>
+                  <p class="project-description">{project.data.description}</p>
+                  <ul class="project-tags" aria-label="Technologies used">
+                    {project.data.technologies.slice(0, 2).map((tech) => (
+                      <li class="project-tag">{tech}</li>
+                    ))}
+                    {project.data.technologies.length > 2 && (
+                      <li
+                        class="project-tag"
+                        title={`+${project.data.technologies.length - 2} more: ${project.data.technologies.slice(2).join(', ')}`}
+                      >
+                        +{project.data.technologies.length - 2} more
+                      </li>
+                    )}
+                  </ul>
+                  <hr class="project-divider" />
+                  <nav
+                    class="project-links"
+                    aria-label={`Links for ${project.data.title}`}
                   >
-                    Details
-                  </a>
-                  {project.data.github && (
-                    <a 
-                      href={project.data.github} 
-                      class="project-link github-link" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={`View ${project.data.title} source code on GitHub (opens in new tab)`}
+                    <a
+                      href={`/portfolio/${project.id}`}
+                      class="project-link"
+                      aria-label={`View details about ${project.data.title}`}
                     >
-                      GitHub
-                      <span class="sr-only"> (opens in new tab)</span>
+                      Details
                     </a>
-                  )}
-                  {project.data.liveUrl && (
-                    <a 
-                      href={project.data.liveUrl} 
-                      class="project-link" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      aria-label={`View live demo of ${project.data.title} (opens in new tab)`}
-                    >
-                      Live Demo
-                      <span class="sr-only"> (opens in new tab)</span>
-                    </a>
-                  )}
-                </nav>
-              </div>
-            </article>
-          </li>
-        ))}
+                    {project.data.github && (
+                      <a
+                        href={project.data.github}
+                        class="project-link github-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View ${project.data.title} source code on GitHub (opens in new tab)`}
+                      >
+                        GitHub
+                        <span class="sr-only"> (opens in new tab)</span>
+                      </a>
+                    )}
+                    {project.data.liveUrl && (
+                      <a
+                        href={project.data.liveUrl}
+                        class="project-link"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`View live demo of ${project.data.title} (opens in new tab)`}
+                      >
+                        Live Demo
+                        <span class="sr-only"> (opens in new tab)</span>
+                      </a>
+                    )}
+                  </nav>
+                </div>
+              </article>
+            </li>
+          ))
+        }
       </ul>
     </main>
   </div>

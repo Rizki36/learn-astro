@@ -1,4 +1,5 @@
 ---
+slug: uas-pengolahan-citra-digital
 title: UAS Pengolahan Citra Digital
 description: Image processing implementation - negative, add, subtract, multiply, divide images.
 startDate: 2023-11-01

@@ -1,4 +1,5 @@
 ---
+slug: e-scoring-paskibra
 title: E-Scoring Paskibra
 description: Scoring application for high school Paskibra competition.
 startDate: 2019-02-01

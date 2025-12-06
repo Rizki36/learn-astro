@@ -1,4 +1,4 @@
-import { getCollection } from "astro:content";
+import { type CollectionEntry, getCollection } from "astro:content";
 import type { APIRoute } from "astro";
 
 export const prerender = false;
@@ -6,9 +6,11 @@ export const prerender = false;
 export const GET: APIRoute = async () => {
 	try {
 		// Fetch all content collections
-		const portfolio = await getCollection("portfolio");
-		const articles = await getCollection("article");
-		const blogs = await getCollection("blog");
+		const portfolio: CollectionEntry<"portfolio">[] =
+			await getCollection("portfolio");
+		const articles: CollectionEntry<"article">[] =
+			await getCollection("article");
+		const blogs: CollectionEntry<"blog">[] = await getCollection("blog");
 
 		// Sort portfolio by date (newest first)
 		const sortedPortfolio = portfolio.sort((a, b) => {
@@ -64,7 +66,7 @@ export const GET: APIRoute = async () => {
 				featured: project.data.featured || false,
 				liveUrl: project.data.liveUrl || null,
 				githubUrl: project.data.github || null,
-				slug: project.slug,
+				slug: project.id,
 			})),
 			articles: articles.map((article) => ({
 				title: article.data.title,
@@ -79,7 +81,7 @@ export const GET: APIRoute = async () => {
 					},
 				),
 				minutesRead: article.data.minutesRead || null,
-				slug: article.slug,
+				slug: article.id,
 			})),
 			blogs: blogs
 				.filter((blog) => !blog.data.draft)
@@ -92,7 +94,7 @@ export const GET: APIRoute = async () => {
 						month: "long",
 						day: "numeric",
 					}),
-					slug: blog.slug,
+					slug: blog.id,
 				})),
 			stats: {
 				totalProjects: portfolio.length,

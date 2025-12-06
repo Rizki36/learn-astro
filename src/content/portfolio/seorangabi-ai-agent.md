@@ -1,4 +1,5 @@
 ---
+slug: seorangabi-ai-agent
 title: SeorangAbi AI Agent
 description: Bridge between SeorangAbi API and LLMs to transform natural language queries into optimized SQL statements.
 startDate: 2025-06-01

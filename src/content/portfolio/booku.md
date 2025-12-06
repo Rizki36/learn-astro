@@ -1,4 +1,5 @@
 ---
+slug: booku
 title: Booku
 startDate: 2022-06-01
 endDate: 2022-06-30

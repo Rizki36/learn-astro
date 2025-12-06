@@ -1,9 +1,11 @@
 import { defineCollection, z } from "astro:content";
+import { glob } from "astro/loaders";
 
 // Define the schema for portfolio projects
 const portfolioCollection = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/portfolio" }),
 	schema: z.object({
+		slug: z.string(),
 		title: z.string(),
 		description: z.string().optional(),
 		publishDate: z.date(),
@@ -21,8 +23,9 @@ const portfolioCollection = defineCollection({
 
 // Define the schema for blog articles
 const articleCollection = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/article" }),
 	schema: z.object({
+		slug: z.string(),
 		title: z.string(),
 		description: z.string(),
 		pubDate: z.date(),
@@ -39,8 +42,9 @@ const articleCollection = defineCollection({
 
 // Define the schema for general blogs (lifestyle, etc.)
 const blogCollection = defineCollection({
-	type: "content",
+	loader: glob({ pattern: "**/*.md", base: "./src/content/blog" }),
 	schema: z.object({
+		slug: z.string(),
 		title: z.string(),
 		excerpt: z.string(),
 		pubDate: z.date(),

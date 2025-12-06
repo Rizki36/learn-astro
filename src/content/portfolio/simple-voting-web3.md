@@ -1,4 +1,5 @@
 ---
+slug: simple-voting-web3
 title: Simple Voting Web3
 description: Decentralized voting application on Ethereum blockchain. Features include Web3 wallet auth, proposal creation, and real-time visualization.
 startDate: 2025-05-01
