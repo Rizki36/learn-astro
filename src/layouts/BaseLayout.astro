@@ -1,38 +1,38 @@
 ---
-import { ClientRouter } from "astro:transitions";
-import "../styles/global.css";
-import Navigation from "../components/Navigation.astro";
-import ChatBot from "../components/ChatBot.tsx";
-import { personSchema, websiteSchema } from "../utils/schema.ts";
+import { ClientRouter } from 'astro:transitions';
+import '../styles/global.css';
+import ChatBot from '../components/ChatBot.tsx';
+import { personSchema, websiteSchema } from '../utils/schema.ts';
+import Navigation from '../components/Navigation';
 const {
-	pageTitle,
-	metaDescription,
-	metaKeywords,
-	ogImage = "/images/og-image.jpg",
-	ogType = "website",
-	twitterCard = "summary_large_image",
-	canonicalURL = Astro.url.href,
-	themeColor = "#161616",
-	schemaData = null,
+  pageTitle,
+  metaDescription,
+  metaKeywords,
+  ogImage = '/images/og-image.jpg',
+  ogType = 'website',
+  twitterCard = 'summary_large_image',
+  canonicalURL = Astro.url.href,
+  themeColor = '#161616',
+  schemaData = null,
 } = Astro.props;
 const {
-	withPadding = true,
-	withMaxWidth = true,
-	className,
-	style,
+  withPadding = true,
+  withMaxWidth = true,
+  className,
+  style,
 } = Astro.props;
 
 // Default description and title if not provided
-const siteTitle = "DevFitra - Full Stack Developer";
+const siteTitle = 'DevFitra - Full Stack Developer';
 const siteDescription =
-	"Portfolio and personal website of Rizki Fitra Rahman, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.";
+  'Portfolio and personal website of Rizki Fitra Rahman, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.';
 const siteKeywords =
-	"rizki fitra rahman, devfitra, developer, full stack, javascript, typescript, react, nextjs, laravel, portfolio, web development";
+  'rizki fitra rahman, devfitra, developer, full stack, javascript, typescript, react, nextjs, laravel, portfolio, web development';
 
 // Base JSON-LD structured data for website and person
 const baseSchemaData = {
-	"@context": "https://schema.org",
-	"@graph": [websiteSchema, personSchema]
+  '@context': 'https://schema.org',
+  '@graph': [websiteSchema, personSchema],
 };
 ---
 
@@ -40,62 +40,87 @@ const baseSchemaData = {
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <meta name="generator" content={Astro.generator} />
-    
+
     <!-- Primary Meta Tags -->
     <title>{pageTitle ? `${pageTitle} | DevFitra` : siteTitle}</title>
-    <meta name="title" content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle} />
+    <meta
+      name="title"
+      content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle}
+    />
     <meta name="description" content={metaDescription || siteDescription} />
     <meta name="keywords" content={metaKeywords || siteKeywords} />
     <meta name="author" content="Rizki Fitra Rahman" />
-    
+
     <!-- Theme Color for browsers -->
     <meta name="theme-color" content={themeColor} />
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href={canonicalURL} />
-    
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content={ogType} />
     <meta property="og:url" content={Astro.url.href} />
-    <meta property="og:title" content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle} />
-    <meta property="og:description" content={metaDescription || siteDescription} />
+    <meta
+      property="og:title"
+      content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle}
+    />
+    <meta
+      property="og:description"
+      content={metaDescription || siteDescription}
+    />
     <meta property="og:image" content={new URL(ogImage, Astro.url)} />
-    
+
     <!-- Twitter -->
     <meta property="twitter:card" content={twitterCard} />
     <meta property="twitter:url" content={Astro.url.href} />
-    <meta property="twitter:title" content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle} />
-    <meta property="twitter:description" content={metaDescription || siteDescription} />
+    <meta
+      property="twitter:title"
+      content={pageTitle ? `${pageTitle} | DevFitra` : siteTitle}
+    />
+    <meta
+      property="twitter:description"
+      content={metaDescription || siteDescription}
+    />
     <meta property="twitter:image" content={new URL(ogImage, Astro.url)} />
-    
+
     <!-- Additional SEO tags -->
     <meta name="robots" content="index, follow" />
-    
+
     <!-- Web App Manifest -->
     <link rel="manifest" href="/manifest.json" />
-    
+
     <!-- RSS Feed -->
-    <link rel="alternate" type="application/rss+xml" title="DevFitra Blog & Articles RSS Feed" href="/rss.xml" />
-    
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="DevFitra Blog & Articles RSS Feed"
+      href="/rss.xml"
+    />
+
     <!-- Sitemap -->
     <link rel="sitemap" href="/sitemap-index.xml" />
-    
+
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(schemaData || baseSchemaData)} />
-    
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schemaData || baseSchemaData)}
+    />
 
     <ClientRouter />
   </head>
   <body>
-    <Navigation />
+    <Navigation client:load />
     <main
       class={`
       main_wrapper 
-      ${withPadding ? "main_wrapper__with_padding" : ""} 
-      ${withMaxWidth ? "main_wrapper__with_max_width" : ""}
-      ${className || ""}
+      ${withPadding ? 'main_wrapper__with_padding' : ''} 
+      ${withMaxWidth ? 'main_wrapper__with_max_width' : ''}
+      ${className || ''}
       `}
       style={style}
     >
