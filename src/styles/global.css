@@ -24,6 +24,7 @@ body {
 	line-height: 1.6;
 	color: var(--color-text);
 	background-color: var(--color-background);
+	position: relative;
 }
 
 h1,
@@ -66,7 +67,6 @@ img {
 }
 
 .main_wrapper {
-	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 }
