@@ -15,7 +15,7 @@ const metaKeywords =
 const allProjects = await getCollection("portfolio");
 
 // Sort projects by order (or other criteria)
-const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+const projects = allProjects.sort((a, b) => b.data.order - a.data.order);
 
 // JSON-LD structured data for portfolio collection
 const portfolioSchema = {
@@ -273,7 +273,9 @@ const portfolioSchema = {
       </p>
     </header>
 
-    <main id="main-content">
+    <main id="main-content"
+      style="margin-bottom: 2rem;"
+    >
       <ul class="projects-grid" role="list" aria-label="Portfolio projects">
         {
           projects.map((project, index) => (
