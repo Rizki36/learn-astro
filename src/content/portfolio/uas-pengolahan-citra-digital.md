@@ -18,8 +18,6 @@ order: 10
 
 A specialized web application developed for the **Digital Image Processing** final project (UAS). This tool leverages the power of the **HTML5 Canvas API** within a **Next.js** environment to perform real-time pixel-level image manipulations.
 
-**Associated with:** Aegir Technologies
-
 ## ✨ Core Features
 
 The platform provides a suite of fundamental image processing operations, executed directly on the client side:
