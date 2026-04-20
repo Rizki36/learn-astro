@@ -16,12 +16,20 @@ liveUrl: https://dikirim.in
 order: 6
 ---
 
-## Description
+# Dikirim.in
 
-Third-party shipping application. Integrates JNE, JNT, SAP, Sicepat APIs and Xendit payment.
+**Dikirim.in** is a robust third-party logistics (3PL) integration platform. It serves as a central hub to manage shipments, connecting businesses with multiple major Indonesian couriers and a seamless payment gateway.
 
-**Associated with:** Afindo Informatika
+## 🛠 Tech Stack
+* **Backend:** CodeIgniter 3 (PHP)
+* **Database:** MySQL
+* **Frontend:** Alpine.js (for reactive UI components) & jQuery
+* **Integrations:** 
+    * **Shipping Vendors:** JNE, J&T, SAP, and SiCepat API.
+    * **Payment Gateway:** Xendit (automated payment processing).
 
-## Links
-
-- [Live Site](https://dikirim.in)
+## ✨ Key Features
+* **Multi-Courier Support:** Manage various shipping providers within a single dashboard.
+* **Automated Payments:** Integrated with Xendit for real-time payment verification.
+* **Reactive Dashboard:** Optimized user experience using Alpine.js for a more modern and snappy interface.
+* **Logistics Tracking:** Real-time tracking and delivery management via official vendor APIs.
