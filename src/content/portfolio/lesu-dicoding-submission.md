@@ -20,8 +20,6 @@ order: 9
 
 **Lesu** is a high-performance Progressive Web App (PWA) designed to help users discover restaurants, view detailed information, leave comments, and bookmark their favorite spots. This project was built as a submission for the **Dicoding Front-End Web Developer Expert** path, focusing on advanced web standards and automated testing.
 
-**Associated with:** Aegir Technologies
-
 ## ✨ Key Features
 
   * **PWA Enabled:** Fully installable with offline capabilities and background sync.
