@@ -10,7 +10,8 @@ technologies:
   - Javascript
   - Webpack
   - Movie API TMDB
-liveUrl: https://movies-api-ochre.vercel.app
+liveUrl: https://movies-api-rizki36.vercel.app
+github: https://github.com/Rizki36/movies-api
 order: 4
 ---
 
