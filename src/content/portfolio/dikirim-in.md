@@ -20,6 +20,8 @@ order: 6
 
 **Dikirim.in** is a robust third-party logistics (3PL) integration platform. It serves as a central hub to manage shipments, connecting businesses with multiple major Indonesian couriers and a seamless payment gateway.
 
+**Associated with:** CV Afindo Informatika
+
 ## 🛠 Tech Stack
 * **Backend:** CodeIgniter 3 (PHP)
 * **Database:** MySQL
