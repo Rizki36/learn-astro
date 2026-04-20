@@ -44,9 +44,12 @@ Hopeproject/bin/debug/hopeproject.exe
 ### Statistics Dashboard
 
 > Provides a comprehensive overview of the polling data and current standings.
+
 ![image](https://user-images.githubusercontent.com/39044004/160570397-f3090ec6-a1a0-4346-9dce-a57f59056888.png)
+
 
 ### Participant Management
 
 > Displays a list of participants eligible for the voting process.
+
 ![image](https://user-images.githubusercontent.com/39044004/160570719-721437c9-f6fe-4245-b15b-476ab8399515.png)
