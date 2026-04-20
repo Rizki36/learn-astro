@@ -14,10 +14,31 @@ liveUrl: https://movies-api-ochre.vercel.app
 order: 4
 ---
 
-## Description
+# Movies API Explorer
 
-Simple movie app using TMDB API.
+A dynamic web application that allows users to discover and explore movies, powered by the **TMDb (The Movie Database) API**. This project demonstrates efficient API integration and front-end bundling.
 
-## Links
+## 🛠 Tech Stack
 
-- [Live Site](https://movies-api-ochre.vercel.app)
+  * **Target Platform:** Web Browser
+  * **Language:** JavaScript (ES6+)
+  * **Library:** jQuery (DOM manipulation and AJAX)
+  * **Module Bundler:** Webpack (for optimized builds)
+  * **Data Source:** [TMDb API](https://www.themoviedb.org/documentation/api)
+
+## 🚀 How to Run
+
+The project comes with a pre-bundled distribution version. To view the application:
+
+1.  Open the `dist` folder.
+2.  Launch `index.html` in your preferred web browser.
+
+## ✨ Key Features
+
+  * **Live Movie Data:** Fetches real-time information from the TMDb database.
+  * **Responsive UI:** Designed to provide a smooth experience across different screen sizes.
+  * **Optimized Assets:** Uses Webpack to manage dependencies and minify assets for better performance.
+
+## 📸 Screenshots
+
+![image](https://user-images.githubusercontent.com/39044004/159104796-2be6d681-82e6-4e4c-bf49-a21d24f3dda3.png)
