@@ -13,10 +13,6 @@ liveUrl: https://seorangabi.com
 order: 12
 ---
 
-## Description
+# SeorangAbi
 
-Company/Project Landing Page.
-
-## Links
-
-- [Live Site](https://seorangabi.com)
+SeorangAbi is a simple landing page for Abi, designed to showcase his portfolio through a curated collection of project visuals in a minimalist layout. It was created to make it easier for people to explore Abi's work without needing to open his social media profiles one by one. The landing page was built using HTML, CSS, and JavaScript.
