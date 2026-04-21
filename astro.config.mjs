@@ -3,6 +3,7 @@ import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
 import { defineConfig } from "astro/config";
 import { SITE_URL } from "./src/utils/schema";
+import mermaid from "astro-mermaid";
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,10 @@ export default defineConfig({
 			changefreq: "weekly",
 			priority: 0.7,
 			lastmod: new Date(),
+		}),
+		mermaid({
+			theme: "dark",
+			autoTheme: true,
 		}),
 	],
 
