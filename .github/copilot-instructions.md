@@ -1,121 +1,54 @@
 # Copilot Instructions for learn-astro
 
-## Project Overview
-Personal portfolio website built with **Astro v5.16.3** using **server mode** (`output: "server"`) deployed on Vercel. Site domain: `devfitra.com`. Uses **Biome 2.0.6** for formatting/linting (not ESLint/Prettier) and follows the strictest TypeScript config (`extends: "astro/tsconfigs/strictest"`). Requires **Node.js >=20.0.0**.
+## Start Here
+- Ignore `README.md` for repo guidance; it is still the default Astro starter template.
+- Use Node.js `>=24.0.0` as defined in `package.json`.
+- Main validation commands:
+  - `npm run check`
+  - `npm run typecheck`
+- Use Biome for formatting and linting. Do not use ESLint or Prettier.
 
-**Architecture**: Hybrid rendering - static pages with `prerender: true` + dynamic API routes with `prerender: false` for the AI chatbot feature.
+## Architecture
+- Astro runs in server mode with the Vercel adapter. See `astro.config.mjs`.
+- Static pages and content routes usually set `export const prerender = true`.
+- API routes under `src/pages/api/` must set `export const prerender = false`.
+- Site-wide metadata constants and schema helpers live in `src/utils/schema.ts`.
 
-## Content Architecture
-Three distinct content collections in `src/content/` using **Astro's new glob loader pattern**:
-- **`portfolio/`** - Project showcases (technologies, dates, live URLs)
-- **`article/`** - Technical writing (tech blog posts)  
-- **`blog/`** - Lifestyle content (travel, personal topics)
+## Content Layer
+- Content collections are defined in `src/content.config.ts` using `astro/loaders` `glob(...)`, not the legacy `src/content/config.ts` pattern.
+- There are three collections in `src/content/`:
+  - `portfolio`
+  - `article`
+  - `blog`
+- Schema field names differ across collections. The most important differences:
+  - articles use `description` and `featuredImage`
+  - blogs use `excerpt` and `featuredImg`
+  - portfolio uses `publishDate`, `startDate`, `endDate`, `technologies`, `github`, `liveUrl`
+- Content schemas are strict. Match field names and types exactly, especially dates.
 
-Each collection has unique schemas defined in `src/content.config.ts` (not `config.ts`) with Zod validation. Key differences:
-- **Portfolio**: `publishDate`, `startDate/endDate`, `description` (optional), `technologies` (array), `featured`, `order`, `github`/`liveUrl`
-- **Articles**: `pubDate`, `description` (required), `minutesRead` (number, optional), `author`, `featuredImage`, `tags`, `draft`
-- **Blogs**: `pubDate`, `excerpt` (required), `minutesRead` (union of number/string, optional), `categoryColor`, `featuredImg`, `tags`, `draft`
+## Dynamic Routes
+- Route files in `src/pages/article/[slug].astro`, `src/pages/blog/[slug].astro`, and `src/pages/portfolio/[slug].astro` generate paths from collection entries.
+- Use `entry.id` for route params, not a frontmatter `slug` field.
+- Article and blog routes filter out drafts in production.
 
-**CRITICAL**: Field names differ between collections - articles use `description`, blogs use `excerpt`; articles use `featuredImage`, blogs use `featuredImg`.
+## Layouts And SEO
+- `src/layouts/BaseLayout.astro` is the root layout for page metadata and shared SEO.
+- `src/layouts/ArticleLayout.astro` and `src/layouts/BlogLayout.astro` wrap collection detail pages.
+- When adding or changing pages, keep metadata and JSON-LD aligned with helpers in `src/utils/schema.ts`.
 
-## Dynamic Routes Pattern
-All collections use `getStaticPaths()` with `getCollection()` and mark `prerender: true`:
-```astro
-export const prerender = true;
+## UI Conventions
+- The site mixes `.astro` components with React components.
+- The chatbot UI lives in `src/components/ChatBot.tsx` and `src/components/MemoizedMarkdown.tsx`.
+- Navigation behavior is implemented with a plain script import from `src/components/Navigation.astro` to `src/scripts/menu.js`.
+- Styling is split between global CSS files in `src/styles/` and scoped `<style>` blocks inside `.astro` files. Do not introduce CSS Modules unless the repo starts using them elsewhere.
+- Images from `src/images/` are imported. Files in `public/` are referenced by absolute `/...` paths.
 
-export async function getStaticPaths() {
-  const entries = await getCollection('portfolio');
-  return entries.map(entry => ({
-    params: { slug: entry.id },  // Use entry.id, not entry.slug
-    props: { entry },
-  }));
-}
-```
-**Important**: Use `entry.id` for params (not `entry.slug`). Articles/blogs filter drafts in production: `getCollection('blog', ({ data }) => import.meta.env.PROD ? !data.draft : true)`
+## Chatbot Notes
+- `src/pages/api/chat.ts` streams responses with the AI SDK and loads context from `/api/chatbot-context.json`.
+- `src/pages/api/chatbot-context.json.ts` builds chatbot context from all content collections.
+- If you change collection schemas or rename content fields, update the chatbot context and any rendering code that depends on those fields.
 
-## Layout Hierarchy
-- **`BaseLayout.astro`** - Root layout with comprehensive SEO meta tags (OG, Twitter, canonical), theme color, JSON-LD structured data
-- **`BlogLayout.astro`** - Extends BaseLayout for blog posts
-- **`ArticleLayout.astro`** - Extends BaseLayout for technical articles
-
-All layouts use `Astro.props` for customization (pageTitle, metaDescription, withPadding, withMaxWidth, schemaData, etc.)
-
-## SEO & Structured Data
-Every page implements JSON-LD schemas from `src/utils/schema.ts`:
-- Base schemas: `personSchema`, `websiteSchema` injected via BaseLayout
-- Page-specific schemas: `createProjectSchema()`, `createArticleSchema()`, `createBlogSchema()`
-- All pages require: `pageTitle`, `metaDescription`, `metaKeywords`, `canonicalURL`, OG tags
-- Sitemap auto-generates at `/sitemap-index.xml` (excludes `/admin`, weekly changefreq)
-
-## Styling Conventions
-- **Scoped styles** within `.astro` components using `<style>` tags
-- **Global CSS** in `src/styles/global.css` with CSS custom properties:
-  - Dark theme by default: `--color-background: #161616`, `--color-text: #e0e0e0`
-  - Font stack: Inter (Google Fonts) + system fonts
-- **CSS Modules** NOT used - prefer scoped Astro styles
-- **Biome formatting**: Tabs for indentation, double quotes for JavaScript strings (configured in `biome.json`)
-
-## Component Patterns
-- **Navigation** (`src/components/Navigation.astro`) imports client-side JS via `<script>` tag for active menu state
-- Components import images from `src/images/` (e.g., `import logo from "../images/logo.svg"`)
-- Props destructuring in frontmatter with defaults: `const { withPadding = true } = Astro.props`
-
-## Development Workflow
-```bash
-npm run dev        # Start dev server (localhost:4321)
-npm run build      # Production build to ./dist/
-npm run preview    # Preview production build
-npm run format     # Biome format (NOT prettier)
-npm run lint       # Biome lint (NOT eslint)
-npm run check      # Biome format + lint combined
-npm run typecheck  # Astro type checking
-```
-
-## AI Chatbot Feature
-**Architecture**: React component (`ChatBot.tsx`) with streaming API route (`/api/chat.ts`)
-- Uses Vercel AI SDK (`@ai-sdk/react`, `@ai-sdk/openai`) with OpenAI's streaming API
-- Context loaded from `/api/chatbot-context.json.ts` (dynamic endpoint, `prerender: false`)
-- Context endpoint aggregates all portfolio/articles/blogs into JSON for RAG-style prompting
-- Markdown rendering via `react-markdown` in `MemoizedMarkdown.tsx` component
-- Styles in `src/styles/chatbot.css`
-
-**Key Implementation Details**:
-```typescript
-// API routes MUST set prerender: false
-export const prerender = false;
-
-export const POST: APIRoute = async ({ request, site }) => {
-  // Uses site prop to fetch context dynamically
-  const contextUrl = site ? `${site}api/chatbot-context.json` : 'http://localhost:4321/api/chatbot-context.json';
-  // ... streaming implementation
-}
-```
-
-## Key Integrations
-- **Vercel Adapter** (`@astrojs/vercel`) - serverless deployment with API routes
-- **React** (`@astrojs/react`) - for interactive ChatBot component
-- **Sitemap** (`@astrojs/sitemap`) - weekly changefreq, excludes `/admin`
-- **RSS Feed** (`@astrojs/rss`) - combined articles + blogs at `/rss.xml`
-- No testing framework configured
-- No UI component library - custom CSS only
-
-## File Naming
-- Components: PascalCase (`BlogCard.astro`, `LatestPosts.astro`)
-- Pages: kebab-case or lowercase (`index.astro`, `404.astro`)
-- Content files: kebab-case markdown (`.md`)
-- Styles: lowercase CSS files
-
-## Common Pitfalls
-- Don't use ESLint/Prettier commands - Biome handles all linting/formatting
-- Content collection schemas are strict - match field types exactly (dates must be Date objects in frontmatter)
-- Image paths: `public/` assets reference with `/`, `src/` assets require imports
-- Client-side JS must be in separate files in `src/scripts/` and imported via `<script>` tags
-- API routes require `prerender: false`, static pages require `prerender: true`
-- Use `entry.id` not `entry.slug` when mapping params in `getStaticPaths()`
-
-## Adding New Content
-1. Add markdown file to appropriate collection folder
-2. Include all required frontmatter fields per schema in `src/content.config.ts`
-3. Dates must be in valid Date format (YYYY-MM-DD works)
-4. For draft posts, set `draft: true` - they'll be excluded in production builds
-5. RSS feed automatically includes new articles/blogs (filtered by draft status)
+## Pitfalls
+- Prefer `src/content.config.ts` and runtime code over older Astro examples or starter docs.
+- Preserve tab indentation and double-quoted JavaScript strings to stay aligned with `biome.json`.
+- There is no test framework configured; use `npm run check` and `npm run typecheck` as the default verification path.
