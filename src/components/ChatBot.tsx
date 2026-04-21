@@ -5,7 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { MemoizedMarkdown } from "./MemoizedMarkdown";
 import "../styles/chatbot.css";
 
-export default function ChatBot() {
+type ChatBotProps = {
+	suggestedQuestions?: string[];
+};
+
+export default function ChatBot({ suggestedQuestions }: ChatBotProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -51,12 +55,7 @@ export default function ChatBot() {
 		}
 	};
 
-	const suggestedQuestions = [
-		"Apa saja project yang pernah dikerjakan?",
-		"Skill apa yang dimiliki Fitra?",
-		"Ceritakan tentang project Seorangabi",
-		"Artikel apa saja yang pernah ditulis?",
-	];
+	const availableSuggestedQuestions = suggestedQuestions ?? [];
 
 	const handleSuggestedQuestion = (question: string) => {
 		sendMessage({ text: question });
@@ -165,7 +164,7 @@ export default function ChatBot() {
 						{messages.length === 1 && !isLoading && (
 							<div className="suggested-questions">
 								<p className="suggested-label">Contoh pertanyaan:</p>
-								{suggestedQuestions.map((question) => (
+								{availableSuggestedQuestions.map((question) => (
 									<button
 										type="button"
 										key={question}

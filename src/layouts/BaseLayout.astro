@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { getEntry } from "astro:content";
 import { ClientRouter } from "astro:transitions";
 import ChatBot from "../components/ChatBot.tsx";
 import Navigation from "../components/Navigation.astro";
@@ -29,6 +30,10 @@ const siteDescription =
 	"Portfolio and personal website of Rizki Fitra Rahman, a passionate Full Stack Developer specializing in React, NextJS, TypeScript and more.";
 const siteKeywords =
 	"rizki fitra rahman, devfitra, developer, full stack, javascript, typescript, react, nextjs, laravel, portfolio, web development";
+
+const chatbotSettings = await getEntry("chatbot", "settings");
+const suggestedQuestions =
+  chatbotSettings?.data.suggestedQuestions.map((item) => item.question) ?? [];
 
 // Base JSON-LD structured data for website and person
 const baseSchemaData = {
@@ -128,6 +133,6 @@ const baseSchemaData = {
     >
       <slot />
     </main>
-    <ChatBot client:idle />
+    <ChatBot client:idle suggestedQuestions={suggestedQuestions} />
   </body>
 </html>

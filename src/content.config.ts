@@ -60,9 +60,23 @@ const blogCollection = defineCollection({
 	}),
 });
 
+const chatbotCollection = defineCollection({
+	loader: glob({ pattern: "settings.json", base: "./src/content/chatbot" }),
+	schema: z.object({
+		suggestedQuestions: z
+			.array(
+				z.object({
+					question: z.string().min(1),
+				}),
+			)
+			.default([]),
+	}),
+});
+
 // Export the collections
 export const collections = {
 	portfolio: portfolioCollection,
 	article: articleCollection,
 	blog: blogCollection,
+	chatbot: chatbotCollection,
 };

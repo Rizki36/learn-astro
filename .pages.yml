@@ -176,6 +176,21 @@ content:
         label: Body
         type: rich-text
 
+  - name: chatbotSettings
+    label: Chatbot Settings
+    path: src/content/chatbot/settings.json
+    type: file
+    fields:
+      - name: suggestedQuestions
+        label: Suggested Questions
+        type: object
+        list: true
+        fields:
+          - name: question
+            label: Question
+            type: text
+            required: true
+
 media:
   input: public/media
   output: /media
