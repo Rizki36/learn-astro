@@ -120,6 +120,10 @@ const portfolioSchema = {
       transition: none;
     }
 
+    .project-image {
+      transition: none;
+    }
+
     .project-card:hover,
     .project-card:focus-within {
       transform: none;
@@ -136,6 +140,13 @@ const portfolioSchema = {
     height: 200px;
     object-fit: cover;
     display: block;
+    filter: grayscale(1) brightness(0.55);
+    transition: filter 0.35s ease;
+  }
+
+  .project-card:hover .project-image,
+  .project-card:focus-within .project-image {
+    filter: grayscale(0) brightness(1);
   }
 
   .project-content {
