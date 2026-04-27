@@ -12,6 +12,7 @@ technologies:
   - MS Access
 github: https://github.com/Rizki36/E-Polling
 order: 1
+image: /media/160570397-f3090ec6-a1a0-4346-9dce-a57f59056888.png
 ---
 
 # E-POLLING / E-BALLOT
