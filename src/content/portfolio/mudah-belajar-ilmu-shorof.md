@@ -16,6 +16,7 @@ technologies:
 github: https://github.com/Rizki36/belajar-bahasa-arab
 liveUrl: https://belajar-shorof.master-arabic.com
 order: 11
+image: /media/386922138-3419254b-cc2a-4c1f-9136-b128ec13c9ff.png
 ---
 
 # Mudah Belajar Ilmu Shorof

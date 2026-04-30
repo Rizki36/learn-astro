@@ -11,6 +11,7 @@ technologies:
   - JavaScript
 liveUrl: https://seorangabi.com
 order: 12
+image: /media/6538e636-2b5b-4d9a-bc67-0d4d23f097bc.png
 ---
 
 # SeorangAbi

@@ -12,6 +12,7 @@ technologies:
   - Prisma ORM
 github: https://github.com/seorangabi/seorangabi-api
 order: 13
+image: /media/142c3adc-c88e-4d74-9e57-4c4ec0dfc577.jpeg
 ---
 
 # SeorangAbi Api

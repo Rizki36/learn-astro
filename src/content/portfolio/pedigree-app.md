@@ -16,6 +16,7 @@ technologies:
   - Tanstack Table
 github: https://github.com/Rizki36/pedigree
 order: 16
+image: /media/441765904-7946b627-4d29-477a-ac28-2a6eda2f654a.png
 ---
 
 # Pedigree App

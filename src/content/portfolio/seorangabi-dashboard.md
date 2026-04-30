@@ -14,6 +14,7 @@ technologies:
   - Rechart
 github: https://github.com/seorangabi/dashboard
 order: 14
+image: /media/460577253-ea891133-5574-4fba-b5d2-cced9b98ef36.png
 ---
 
 # SeorangAbi Dashboard

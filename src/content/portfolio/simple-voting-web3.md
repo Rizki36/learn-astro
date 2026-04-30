@@ -14,6 +14,7 @@ technologies:
 github: https://github.com/Rizki36/simple-voting-web3
 liveUrl: https://vote-chain.vercel.app/
 order: 17
+image: /media/452798987-56323978-9280-4116-95cd-c8727a00ed83.png
 ---
 
 # Simple Voting Web3

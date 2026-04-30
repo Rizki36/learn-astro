@@ -15,6 +15,7 @@ technologies:
   - Material UI
 github: https://github.com/Rizki36/inaf
 order: 5
+image: /media/162791755-2ed66cf7-1b3e-49db-98d6-b478385e1792.png
 ---
 
 # InAF (Inaf Todo)

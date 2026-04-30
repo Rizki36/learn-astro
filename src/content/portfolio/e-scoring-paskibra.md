@@ -12,6 +12,7 @@ technologies:
   - Mysql
 github: https://github.com/Rizki36/Escoring
 order: 2
+image: /media/160567334-ee3c8819-bba3-4b44-8f93-0c287634f96b.png
 ---
 
 # E-Scoring V2

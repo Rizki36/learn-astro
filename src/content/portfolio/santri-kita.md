@@ -12,6 +12,7 @@ technologies:
   - Graphql (Apollo)
 github: https://github.com/Dev-Kita/santri-kita
 order: 3
+image: /media/159106280-0e6de622-48e0-4c08-abbc-f2964a8a7210.png
 ---
 
 # Santri Kita

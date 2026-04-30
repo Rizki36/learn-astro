@@ -13,6 +13,7 @@ technologies:
 liveUrl: https://movies-api-rizki36.vercel.app
 github: https://github.com/Rizki36/movies-api
 order: 4
+image: /media/159104796-2be6d681-82e6-4e4c-bf49-a21d24f3dda3.png
 ---
 
 # Movies API Explorer

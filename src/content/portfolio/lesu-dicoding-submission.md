@@ -14,6 +14,7 @@ technologies:
 github: https://github.com/Rizki36/dicoding-restaurant-apps
 liveUrl: https://lesu.devfitra.com
 order: 9
+image: /media/166297681-8f3c1a2d-4b7e-4c91-a6d2-5f8e9b1c7d34.png
 ---
 
 # Lesu (Restaurant Discovery App)

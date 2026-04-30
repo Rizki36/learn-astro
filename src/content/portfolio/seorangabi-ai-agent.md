@@ -11,6 +11,7 @@ technologies:
   - Google Gemini
 github: https://github.com/Rizki36/seorangabi-agent
 order: 18
+image: /media/22fc292c-f93d-4161-aa98-00580bf3f8ae.png
 ---
 
 # SeorangAbi AI Agent

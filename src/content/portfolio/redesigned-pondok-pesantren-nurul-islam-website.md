@@ -13,6 +13,7 @@ technologies:
 github: https://github.com/Rizki36/redesign-nuriska-id
 liveUrl: https://nuriska-id.vercel.app/
 order: 15
+image: /media/9448bcb6-3f66-4b53-af70-472d968db3a2.png
 ---
 
 # Pondok Pesantren Nurul Islam Website Redesign

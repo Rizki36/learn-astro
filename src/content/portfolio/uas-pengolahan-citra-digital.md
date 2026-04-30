@@ -12,6 +12,7 @@ technologies:
 github: https://github.com/Rizki36/uas-pcd
 liveUrl: https://uas-pcd.devfitra.com/
 order: 10
+image: /media/77a637cc-9ad0-49ee-a21d-eec093222760.png
 ---
 
 # Digital Image Processing Dashboard

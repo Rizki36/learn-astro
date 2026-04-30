@@ -12,6 +12,7 @@ technologies:
 liveUrl: http://booku.devfitra.com/
 github: https://github.com/Rizki36/exam-frontend
 order: 7
+image: /media/166297666-6621815c-9be4-407a-9fa6-0de2e934c4bb.png
 ---
 
 # Booku App
