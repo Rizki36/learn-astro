@@ -73,10 +73,27 @@ const chatbotCollection = defineCollection({
 	}),
 });
 
+const toolsCollection = defineCollection({
+	loader: glob({ pattern: "**/*.md", base: "./src/content/tools" }),
+	schema: z.object({
+		slug: z.string(),
+		title: z.string(),
+		description: z.string(),
+		image: z.string(),
+		iframeUrl: z.string().url(),
+		openUrl: z.string().url(),
+		order: z.number().default(0),
+		featured: z.boolean().default(false),
+		draft: z.boolean().default(false),
+		publishDate: z.date().optional(),
+	}),
+});
+
 // Export the collections
 export const collections = {
 	portfolio: portfolioCollection,
 	article: articleCollection,
 	blog: blogCollection,
 	chatbot: chatbotCollection,
+	tools: toolsCollection,
 };

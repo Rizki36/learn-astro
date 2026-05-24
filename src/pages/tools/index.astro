@@ -1,0 +1,235 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { AUTHOR_NAME, SITE_URL } from "../../utils/schema";
+
+const pageTitle = "Tools";
+const metaDescription =
+	"A collection of tools I have built, complete with embedded previews, short summaries, and dedicated detail pages for each tool.";
+const metaKeywords =
+	"tools, web tools, iframe tools, developer tools, devfitra";
+
+const allTools = await getCollection("tools", ({ data }) => {
+	return import.meta.env.PROD ? !data.draft : true;
+});
+const tools = allTools.sort((left, right) => {
+	if (left.data.featured !== right.data.featured) {
+		return Number(right.data.featured) - Number(left.data.featured);
+	}
+
+	if (left.data.order !== right.data.order) {
+		return right.data.order - left.data.order;
+	}
+
+	return left.data.title.localeCompare(right.data.title);
+});
+
+const toolsCollectionSchema = {
+	"@context": "https://schema.org",
+	"@type": "CollectionPage",
+	name: "Tools - DevFitra",
+	description: metaDescription,
+	url: `${SITE_URL}/tools`,
+	author: {
+		"@type": "Person",
+		"@id": `${SITE_URL}/#person`,
+		name: AUTHOR_NAME,
+	},
+	mainEntity: {
+		"@type": "ItemList",
+		itemListElement: tools.map((tool, index) => ({
+			"@type": "ListItem",
+			position: index + 1,
+			item: {
+				"@type": "SoftwareApplication",
+				name: tool.data.title,
+				description: tool.data.description,
+				image: `${SITE_URL}${tool.data.image}`,
+				url: `${SITE_URL}/tools/${tool.id}`,
+			},
+		})),
+	},
+};
+---
+
+<style>
+  .tools-page {
+    width: min(1120px, calc(100% - 2rem));
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+  }
+
+  .tools-header {
+    text-align: center;
+    margin: 2rem auto 3rem;
+    max-width: 780px;
+  }
+
+  .tools-title {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .tools-description {
+    color: var(--color-text-light);
+    font-size: 1.05rem;
+  }
+
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    overflow: hidden;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+      #141414;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+    transition:
+      transform 0.25s ease,
+      border-color 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+
+  .tool-card:hover,
+  .tool-card:focus-within {
+    transform: translateY(-6px);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.36);
+  }
+
+  .tool-card__link {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .tool-card__media {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at top left, rgba(255, 255, 255, 0.14), transparent 45%),
+      #1f1f1f;
+    padding: 1rem;
+  }
+
+  .tool-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .tool-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.25rem;
+    flex: 1;
+  }
+
+  .tool-card__badge {
+    width: fit-content;
+    padding: 0.35rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #d8d8d8;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .tool-card__title {
+    font-size: 1.35rem;
+    margin: 0;
+  }
+
+  .tool-card__description {
+    color: var(--color-text-light);
+    margin: 0;
+    flex: 1;
+  }
+
+  .tool-card__cta {
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  .tools-empty {
+    border: 1px dashed var(--color-border);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-light);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tool-card {
+      transition: none;
+    }
+
+    .tool-card:hover,
+    .tool-card:focus-within {
+      transform: none;
+    }
+  }
+</style>
+
+<BaseLayout
+  pageTitle={pageTitle}
+  metaDescription={metaDescription}
+  metaKeywords={metaKeywords}
+  schemaData={toolsCollectionSchema}
+>
+  <section class="tools-page">
+    <header class="tools-header">
+      <h1 class="tools-title text-gradient">Tools that I build</h1>
+      <p class="tools-description">
+        This page collects the tools I have built in a format that is quick to
+        preview
+      </p>
+    </header>
+
+    {
+      tools.length > 0 ? (
+        <ul class="tools-grid">
+          {tools.map((tool) => (
+            <li class="tool-card">
+              <a class="tool-card__link" href={`/tools/${tool.id}`}>
+                <div class="tool-card__media">
+                  <img
+                    class="tool-card__image"
+                    src={tool.data.image}
+                    alt={`Preview ${tool.data.title}`}
+                    loading="lazy"
+                  />
+                </div>
+                <div class="tool-card__content">
+                  {tool.data.featured && <span class="tool-card__badge">Featured</span>}
+                  <h2 class="tool-card__title">{tool.data.title}</h2>
+                  <p class="tool-card__description">{tool.data.description}</p>
+                  <span class="tool-card__cta">Open preview -></span>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div class="tools-empty">
+          No tools have been added yet. Add a new markdown file in
+          <strong>src/content/tools</strong> to show a card on this page.
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

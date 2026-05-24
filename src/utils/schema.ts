@@ -183,3 +183,46 @@ export function createProjectSchema(project: {
 		}),
 	};
 }
+
+/**
+ * Creates a SoftwareApplication schema for tools pages
+ */
+export function createToolSchema(tool: {
+	title: string;
+	description: string;
+	url: string;
+	image?: string;
+	iframeUrl: string;
+	openUrl: string;
+	publishDate?: Date;
+}) {
+	return {
+		"@context": "https://schema.org",
+		"@type": "SoftwareApplication",
+		name: tool.title,
+		description: tool.description,
+		applicationCategory: "DeveloperApplication",
+		author: {
+			"@type": "Person",
+			"@id": `${SITE_URL}/#person`,
+			name: AUTHOR_NAME,
+		},
+		creator: {
+			"@type": "Person",
+			"@id": `${SITE_URL}/#person`,
+			name: AUTHOR_NAME,
+		},
+		url: `${SITE_URL}${tool.url}`,
+		image: tool.image || `${SITE_URL}/images/og-image.svg`,
+		datePublished: tool.publishDate?.toISOString(),
+		screenshot: tool.image || `${SITE_URL}/images/og-image.svg`,
+		offer: {
+			"@type": "Offer",
+			price: "0",
+			priceCurrency: "USD",
+		},
+		sameAs: tool.openUrl,
+		downloadUrl: tool.openUrl,
+		installUrl: tool.iframeUrl,
+	};
+}
