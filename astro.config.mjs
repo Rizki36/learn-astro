@@ -2,8 +2,8 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel";
 import { defineConfig } from "astro/config";
-import { SITE_URL } from "./src/utils/schema";
 import mermaid from "astro-mermaid";
+import { SITE_URL } from "./src/utils/schema";
 
 // https://astro.build/config
 export default defineConfig({

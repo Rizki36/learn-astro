@@ -33,7 +33,7 @@ const siteKeywords =
 
 const chatbotSettings = await getEntry("chatbot", "settings");
 const suggestedQuestions =
-  chatbotSettings?.data.suggestedQuestions.map((item) => item.question) ?? [];
+	chatbotSettings?.data.suggestedQuestions.map((item) => item.question) ?? [];
 
 // Base JSON-LD structured data for website and person
 const baseSchemaData = {
